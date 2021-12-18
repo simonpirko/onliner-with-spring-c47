@@ -1,31 +1,36 @@
 package by.fakeonliner.entity.product;
 
-import by.fakeonliner.entity.user.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode
+@NoArgsConstructor
+@Entity
+@Table(name = "comments")
 public class Comment {
-    private long commentID = 0;
-    private long productID;
-    private User user;
+
+    @Id
+    @Column(name = "comment_id")
+    private long commentID;
+
     private String description;
+
     private Timestamp timestamp;
+
     private String comment;
 
-
-    public Comment(User user, long productID, String comment, Timestamp timestamp) {
-        this.user = user;
-        this.productID = productID;
+    public Comment(String comment, Timestamp timestamp) {
         this.comment = comment;
         this.timestamp = timestamp;
-        ++commentID;
     }
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "comments_product"
+            ,joinColumns = @JoinColumn(name = "comment_id")
+            ,inverseJoinColumns = @JoinColumn(name = "product_id"))
+    List<Product> products;
 }

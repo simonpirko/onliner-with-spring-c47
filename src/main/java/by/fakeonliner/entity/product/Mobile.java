@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class Mobile extends Product {
-
     private String mobileType;
     private String processor;
     private String operationSystem;
