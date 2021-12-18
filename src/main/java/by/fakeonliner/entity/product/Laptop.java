@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class Laptop extends Product{
-
     private String type;
     private String videoCard;
     private String processor;
