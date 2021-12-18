@@ -34,5 +34,6 @@ public class User {
     @NotBlank(message = "Empty field")
     private String phoneNumber;
 
+    @Enumerated(EnumType.STRING)
     private RoleUser roleUser;
 }
