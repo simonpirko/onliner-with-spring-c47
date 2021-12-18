@@ -3,6 +3,7 @@ package by.fakeonliner.entity.product;
 import lombok.*;
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -14,18 +15,17 @@ import java.util.List;
 public class Comment {
 
     @Id
-    @Column(name = "comment_id")
     private long commentID;
 
     private String description;
 
-    private Timestamp timestamp;
+    private LocalDateTime localDateTime;
 
     private String comment;
 
-    public Comment(String comment, Timestamp timestamp) {
+    public Comment(String comment, LocalDateTime localDateTime) {
         this.comment = comment;
-        this.timestamp = timestamp;
+        this.localDateTime = localDateTime;
     }
 
     @ManyToMany(cascade = CascadeType.ALL)
