@@ -1,4 +1,4 @@
-package by.fakeonliner.repository.query_constant;
+package by.fakeonliner.repository.jdbc_query_constant;
 
 public class BasketQueryConstant {
     public static final String ADD_PRODUCT_QUERY = "INSERT INTO basket (user_id, product_id, amount) VALUES (?, ?, ?)";

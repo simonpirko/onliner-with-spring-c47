@@ -1,4 +1,4 @@
-package by.fakeonliner.repository.query_constant;
+package by.fakeonliner.repository.jdbc_query_constant;
 
 public class LaptopQueryConstant {
     public static final String ADD_LAPTOP_QUERY = "INSERT INTO laptop (id, type, video_card, processor," +

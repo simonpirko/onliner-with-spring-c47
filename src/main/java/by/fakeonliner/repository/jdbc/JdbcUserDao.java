@@ -3,7 +3,7 @@ package by.fakeonliner.repository.jdbc;
 import by.fakeonliner.entity.user.User;
 import by.fakeonliner.repository.UserDao;
 import by.fakeonliner.repository.configuration.JdbcConnection;
-import by.fakeonliner.repository.query_constant.UserQueryConstant;
+import by.fakeonliner.repository.jdbc_query_constant.UserQueryConstant;
 
 import java.sql.*;
 import java.util.ArrayList;
