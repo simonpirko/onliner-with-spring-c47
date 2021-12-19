@@ -30,8 +30,9 @@ public class HibernateProductDao implements ProductDao {
 
     @Override
     public boolean existByModel(String model) {
-
-        return false;
+        Session session = sessionFactory.openSession();
+        boolean exist = session.createQuery("from Product where model = :mo").setParameter("mo", model).uniqueResult() != null;
+        return exist;
     }
 
     @Override
@@ -45,7 +46,12 @@ public class HibernateProductDao implements ProductDao {
 
     @Override
     public List<ProductDto> findByBrand(String name, String category) {
-        return null;
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("from Product p where model = :mo and categoryProduct = :cat")
+                .setParameter("mo", name)
+                .setParameter("cat", category);
+        List<ProductDto> productDtoList = query.getResultList();
+        return productDtoList;
     }
 
     @Override
@@ -59,7 +65,13 @@ public class HibernateProductDao implements ProductDao {
 
     @Override
     public List<ProductDto> findByPrice(double min, double max, String category) {
-        return null;
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("from Product p where price < :min and price > :max and categoryProduct = :cat")
+                .setParameter("min", min)
+                .setParameter("max", max)
+                .setParameter("cat", category);
+        List<ProductDto> productDtoList = query.getResultList();
+        return productDtoList;
     }
 
     @Override
@@ -67,8 +79,6 @@ public class HibernateProductDao implements ProductDao {
         Session session = sessionFactory.openSession();
         Product product = session.find(Product.class, id);
 //        session.saveOrUpdate();
-
-
     }
 
     @Override
@@ -83,7 +93,7 @@ public class HibernateProductDao implements ProductDao {
     public ProductDto findById(int id) {
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("from User where id = :im", Product.class);
-        query.setParameter("im",id);
+        query.setParameter("im", id);
         ProductDto productdto = (ProductDto) query.getSingleResult();
         session.close();
         return productdto;

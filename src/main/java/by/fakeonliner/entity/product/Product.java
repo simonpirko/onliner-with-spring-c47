@@ -28,6 +28,7 @@ public abstract class Product {
     private int marketLaunchDate;
     private double averageRating;
     private String description;
+    private String urlImage;
 
     @Enumerated(value = EnumType.STRING)
     private CategoryProduct categoryProduct;
