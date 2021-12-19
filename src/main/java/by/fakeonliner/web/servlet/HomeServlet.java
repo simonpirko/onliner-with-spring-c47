@@ -1,5 +1,6 @@
 package by.fakeonliner.web.servlet;
 
+import by.fakeonliner.dto.BasketProductDto;
 import by.fakeonliner.dto.ProductDto;
 import by.fakeonliner.entity.user.User;
 import by.fakeonliner.service.BasketService;
@@ -43,7 +44,7 @@ public class HomeServlet extends HttpServlet {
 
         if(req.getSession().getAttribute("guest") == null) {
             User user = (User) req.getSession().getAttribute("user");
-            basketService.addProductDb(user.getId(), product.getId());
+            basketService.addProductDb(new BasketProductDto(user, product));
         } else {
             basketService.addProduct(product);
         }

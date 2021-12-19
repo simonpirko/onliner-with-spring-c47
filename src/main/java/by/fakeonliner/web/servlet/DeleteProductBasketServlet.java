@@ -1,5 +1,6 @@
 package by.fakeonliner.web.servlet;
 
+import by.fakeonliner.dto.BasketProductDto;
 import by.fakeonliner.dto.ProductDto;
 import by.fakeonliner.entity.user.User;
 import by.fakeonliner.service.BasketService;
@@ -37,9 +38,9 @@ public class DeleteProductBasketServlet extends HttpServlet {
 
         if (req.getSession().getAttribute("guest") == null) {
             User user = (User) req.getSession().getAttribute("user");
-            basketService.deleteProductFromBd(product.getId(), user.getId());
+            basketService.deleteProductFromBd(new BasketProductDto(user, product));
         } else {
-            basketService.deleteProductFromMemory(product.getId());
+            basketService.deleteProductFromMemory(new BasketProductDto(new User(1), product));
         }
 
         resp.sendRedirect("/basket");

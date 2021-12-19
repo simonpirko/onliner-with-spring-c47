@@ -1,9 +1,9 @@
 package by.fakeonliner.repository.inMemory;
 
 import by.fakeonliner.dto.BasketProductDto;
+import by.fakeonliner.entity.user.User;
 import by.fakeonliner.repository.BasketDao;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class InMemoryBasketDao implements BasketDao {
     @Override
     public void addProduct(BasketProductDto product) {
         for (int i = 0; i < basket.size(); i++) {
-            if (basket.get(i).getModel().equals(product.getModel())) {
+            if (basket.get(i).getProduct().getModel().equals(product.getProduct().getModel())) {
                 int amount = basket.get(i).getAmount() + 1;
                 basket.get(i).setAmount(amount);
                 return;
@@ -23,10 +23,9 @@ public class InMemoryBasketDao implements BasketDao {
     }
 
     @Override
-    public void deleteProduct(long productId, long userId) {
-        List<BasketProductDto> list = new ArrayList<>();
+    public void deleteProductDb(BasketProductDto product) {
         for(BasketProductDto item : basket) {
-            if (item.getId() == productId) {
+            if (item.getId() == product.getProduct().getId()) {
                 if (item.getAmount() == 1) {
                     basket.remove(item);
                     return;
@@ -38,27 +37,22 @@ public class InMemoryBasketDao implements BasketDao {
     }
 
     @Override
-    public List<BasketProductDto> getBasket() {
-        return basket;
-    }
-
-    @Override
-    public List<BasketProductDto> getBasketFromDb(long userId) {
+    public List<BasketProductDto> getBasketProducts(User user) {
         return null;
     }
 
     @Override
-    public int getProductAmount(long productId, long userId) {
+    public int getProductAmount(BasketProductDto product) {
         return 0;
     }
 
     @Override
-    public void changeProductAmount(long productId, long userId, int amount) {
+    public void updateProduct(BasketProductDto product) {
 
     }
 
     @Override
-    public boolean addProductDb(long id, long productId, int amount) {
+    public boolean existByProductDto(BasketProductDto product) {
         return false;
     }
 }

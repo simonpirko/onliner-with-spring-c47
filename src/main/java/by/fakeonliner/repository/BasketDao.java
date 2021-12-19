@@ -1,22 +1,20 @@
 package by.fakeonliner.repository;
 
 import by.fakeonliner.dto.BasketProductDto;
+import by.fakeonliner.entity.user.User;
 
 import java.util.List;
 
 public interface BasketDao {
 
     void addProduct(BasketProductDto product);
+    void deleteProductDb(BasketProductDto product);
 
-    boolean addProductDb(long id, long productId, int amount);
+    List<BasketProductDto> getBasketProducts(User user);
 
-    void deleteProduct(long productId, long userId);
+    int getProductAmount(BasketProductDto product);
 
-    List<BasketProductDto> getBasket();
+    void updateProduct(BasketProductDto product);
 
-    List<BasketProductDto> getBasketFromDb(long userId);
-
-    int getProductAmount(long productId, long userId);
-
-    void changeProductAmount(long productId, long userId, int amount);
+    boolean existByProductDto(BasketProductDto product);
 }

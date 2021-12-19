@@ -37,4 +37,8 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private RoleUser roleUser;
+
+    public User(long id) {
+        this.id = id;
+    }
 }
