@@ -23,27 +23,22 @@ public abstract class Product {
 
 
     private String brand;
-
-
     private BigDecimal price;
-
     private String model;
-
     private int marketLaunchDate;
-
     private double averageRating;
-
     private String description;
 
+    @Enumerated(value = EnumType.STRING)
     private CategoryProduct categoryProduct;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "comments_products"
             , joinColumns = @JoinColumn(name = "product_id")
             , inverseJoinColumns = @JoinColumn(name = "comment_id"))
     private List<Comment> comments;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "shop_products"
             , joinColumns = @JoinColumn(name = "product_id")
             , inverseJoinColumns = @JoinColumn(name = "shop_id"))

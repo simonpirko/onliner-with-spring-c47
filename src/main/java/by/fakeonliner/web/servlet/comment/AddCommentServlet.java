@@ -29,12 +29,12 @@ public class AddCommentServlet extends HttpServlet {
         String message = req.getParameter("comment");
         User user = (User) req.getSession().getAttribute("user");
         Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
-        Comment comment = new Comment(user, productID, message, timestamp);
-        if(commentService.addComment(comment)){
-            req.setAttribute("message_comment_add", "Comment added successfully ");
-        } else {
-            req.setAttribute("message_comment_add", "Error");
-        }
-        getServletContext().getRequestDispatcher(COMMENT_ADD_JSP);
+//        Comment comment = new Comment(user, productID, message, timestamp);
+//        if(commentService.addComment(comment)){
+//            req.setAttribute("message_comment_add", "Comment added successfully ");
+//        } else {
+//            req.setAttribute("message_comment_add", "Error");
+//        }
+//        getServletContext().getRequestDispatcher(COMMENT_ADD_JSP);
     }
 }

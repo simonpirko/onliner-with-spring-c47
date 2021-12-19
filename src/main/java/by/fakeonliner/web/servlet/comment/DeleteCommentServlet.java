@@ -26,15 +26,15 @@ public class DeleteCommentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
-        if (user.getId() == comment.getUser().getId()) {
-            if (commentService.deleteComment(commentID)) {
-                req.setAttribute("message_comment_delete", "Comment delete successfully ");
-            } else {
-                req.setAttribute("message_comment_delete", "Error");
-            }
-        } else {
-            req.setAttribute("message_comment_delete", "Comment not found");
-        }
+//        if (user.getId() == comment.getUser().getId()) {
+//            if (commentService.deleteComment(commentID)) {
+//                req.setAttribute("message_comment_delete", "Comment delete successfully ");
+//            } else {
+//                req.setAttribute("message_comment_delete", "Error");
+//            }
+//        } else {
+//            req.setAttribute("message_comment_delete", "Comment not found");
+//        }
 //        getServletContext().getRequestDispatcher();
     }
 }

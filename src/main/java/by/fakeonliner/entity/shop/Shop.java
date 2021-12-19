@@ -33,12 +33,10 @@ public class Shop {
     private String contactAddress;
 
     private String description;
-
     private String rating;
-
     private int countRating;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private List<Comment> comments;
 
     public Shop(String password, String name, String phoneNumber, String email) {
