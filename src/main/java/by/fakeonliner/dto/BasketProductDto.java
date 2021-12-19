@@ -13,14 +13,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
-@Table(name = "basket")
 public class BasketProductDto {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @OneToOne
-    @Column(name = "user_id")
     private User user;
 
     @OneToOne
