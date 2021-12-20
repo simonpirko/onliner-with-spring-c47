@@ -30,9 +30,6 @@ public class User {
     private String lastName;
 
     @NotBlank(message = "Empty field")
-    private String username;
-
-    @NotBlank(message = "Empty field")
     private String phoneNumber;
 
     @Enumerated(EnumType.STRING)

@@ -31,8 +31,7 @@ public class HibernateProductDao implements ProductDao {
     @Override
     public boolean existByModel(String model) {
         Session session = sessionFactory.openSession();
-        boolean exist = session.createQuery("from Product where model = :mo").setParameter("mo", model).uniqueResult() != null;
-        return exist;
+        return session.createQuery("from Product where model = :mo").setParameter("mo", model).uniqueResult() != null;
     }
 
     @Override
