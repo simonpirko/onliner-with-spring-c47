@@ -2,6 +2,7 @@ package by.fakeonliner.service;
 
 import by.fakeonliner.dto.BasketProductDto;
 import by.fakeonliner.dto.ProductDto;
+import by.fakeonliner.entity.user.User;
 import by.fakeonliner.repository.BasketDao;
 import by.fakeonliner.repository.inMemory.InMemoryBasketDao;
 import by.fakeonliner.repository.jdbc.JdbcBasketDao;
@@ -23,51 +24,52 @@ public class BasketService {
     }
 
     public void addProduct(ProductDto product) {
-        BasketProductDto basketProductDto = new BasketProductDto();
-        setFieldsBasket(product, basketProductDto);
-        basketProductDto.setAmount(1);
-        inMemoryBasketDao.addProduct(basketProductDto);
+        BasketProductDto basketProduct = new BasketProductDto();
+        setFieldsBasket(product, basketProduct);
+        basketProduct.setAmount(1);
+        inMemoryBasketDao.addProduct(basketProduct);
     }
 
-    public void addProductDb(long id, long productId) {
-        int amount = jdbcBasketDao.getProductAmount(productId, id);
-        if (amount > 0) {
-            jdbcBasketDao.changeProductAmount(productId, id, ++amount);
+    public void addProductDb(BasketProductDto product) {
+        if(jdbcBasketDao.existByProductDto(product)) {
+            int amount = jdbcBasketDao.getProductAmount(product);
+            product.setAmount(++amount);
+            jdbcBasketDao.updateProduct(product);
         } else {
-            jdbcBasketDao.addProductDb(id, productId, ++amount);
+            jdbcBasketDao.addProduct(product);
         }
     }
 
-    public List<BasketProductDto> getProductList() {
-        return inMemoryBasketDao.getBasket();
+    public List<BasketProductDto> getProductList(User user) {
+        return inMemoryBasketDao.getBasketProducts(user);
     }
 
-    public List<BasketProductDto> getProductListFromDb(long id) {
-        return jdbcBasketDao.getBasketFromDb(id);
+    public List<BasketProductDto> getProductListFromDb(User user) {
+        return jdbcBasketDao.getBasketProducts(user);
     }
 
-    public void deleteProductFromBd(long productId, long userId) {
-        int amount = jdbcBasketDao.getProductAmount(productId, userId);
+    public void deleteProductFromBd(BasketProductDto product) {
+        int amount = jdbcBasketDao.getProductAmount(product);
         if (amount > 1) {
-            jdbcBasketDao.changeProductAmount(productId, userId, --amount);
+            jdbcBasketDao.updateProduct(product);
         } else {
-            jdbcBasketDao.deleteProduct(productId, userId);
+            jdbcBasketDao.deleteProductDb(product);
         }
     }
 
-    public void deleteProductFromMemory(long productId) {
-        inMemoryBasketDao.deleteProduct(productId, 1);
+    public void deleteProductFromMemory(BasketProductDto product) {
+        inMemoryBasketDao.deleteProductDb(product);
     }
 
-    private void setFieldsBasket(ProductDto product, BasketProductDto basketProductDto) {
-        basketProductDto.setId(product.getId());
-        basketProductDto.setBrand(product.getBrand());
-        basketProductDto.setModel(product.getModel());
-        basketProductDto.setPrice(product.getPrice());
-        basketProductDto.setDescription(product.getDescription());
-        basketProductDto.setAverageRating(product.getAverageRating());
-        basketProductDto.setMarketLaunchDate(product.getMarketLaunchDate());
-        basketProductDto.setImage(product.getImage());
-        basketProductDto.setAmount(1);
+    private void setFieldsBasket(ProductDto product, BasketProductDto productDto) {
+        productDto.getProduct().setId(product.getId());
+        productDto.getProduct().setBrand(product.getBrand());
+        productDto.getProduct().setModel(product.getModel());
+        productDto.getProduct().setPrice(product.getPrice());
+        productDto.getProduct().setDescription(product.getDescription());
+        productDto.getProduct().setAverageRating(product.getAverageRating());
+        productDto.getProduct().setMarketLaunchDate(product.getMarketLaunchDate());
+        productDto.getProduct().setImage(product.getImage());
+        productDto.setAmount(1);
     }
 }

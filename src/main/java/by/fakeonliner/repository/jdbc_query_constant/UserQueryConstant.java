@@ -1,4 +1,4 @@
-package by.fakeonliner.repository.query_constant;
+package by.fakeonliner.repository.jdbc_query_constant;
 
 public class UserQueryConstant {
     public static final String ADD_USER_QUERY = "INSERT INTO users (username, password, " +

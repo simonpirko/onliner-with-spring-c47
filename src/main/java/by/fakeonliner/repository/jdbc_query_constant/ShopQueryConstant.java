@@ -1,4 +1,4 @@
-package by.fakeonliner.repository.query_constant;
+package by.fakeonliner.repository.jdbc_query_constant;
 
 public class ShopQueryConstant {
     public static final String ADD_SHOP_QUERY = "INSERT INTO shop_list (shop_name, password," +

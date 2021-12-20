@@ -27,13 +27,15 @@ public class BasketServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getSession().getAttribute("guest") == null) {
             User user = (User) req.getSession().getAttribute("user");
-            List<BasketProductDto> productsDb = basketService.getProductListFromDb(user.getId());
-            double totalCost = getTotalCost(productsDb);
-            setAttribute(req, totalCost, productsDb);
+            List<BasketProductDto> productsDb = basketService.getProductListFromDb(user);
+            double totalCost = getTotalCostList(productsDb);
+            req.setAttribute("totalCost", totalCost);
+            req.getSession().setAttribute("basketList", productsDb);
         } else {
-            List<BasketProductDto> products = basketService.getProductList();
-            double totalCost = getTotalCost(products);
-            setAttribute(req, totalCost, products);
+            List<BasketProductDto> products = basketService.getProductList(new User(1));
+            double totalCost = getTotalCostList(products);
+            req.setAttribute("totalCost", totalCost);
+            req.getSession().setAttribute("basketList", products);
         }
         getServletContext().getRequestDispatcher(ConstantPath.BASKET_JSP).forward(req, resp);
     }
@@ -44,27 +46,15 @@ public class BasketServlet extends HttpServlet {
     }
 
 
-    private double getTotalCost(List<BasketProductDto> basketList) {
+    private double getTotalCostList(List<BasketProductDto> basketList) {
         double amount = 0;
         for(BasketProductDto item : basketList) {
             if (item.getAmount() > 1) {
-                amount += item.getPrice() * item.getAmount();
+                amount += item.getProduct().getPrice() * item.getAmount();
             } else {
-                amount += item.getPrice();
+                amount += item.getProduct().getPrice();
             }
         }
         return amount;
-    }
-
-    private List<BasketProductDto> getFinishedList(List<BasketProductDto> guestList, List<BasketProductDto> productsDb) {
-        for (BasketProductDto product : productsDb) {
-            guestList.add(product);
-        }
-        return guestList;
-    }
-
-    private void setAttribute(HttpServletRequest req, double totalCost, List<BasketProductDto> products) {
-        req.setAttribute("totalCost", totalCost);
-        req.getSession().setAttribute("basketList", products);
     }
 }

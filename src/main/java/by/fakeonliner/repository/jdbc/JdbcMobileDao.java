@@ -3,8 +3,8 @@ package by.fakeonliner.repository.jdbc;
 import by.fakeonliner.entity.product.Mobile;
 import by.fakeonliner.repository.CategoryProductDao;
 import by.fakeonliner.repository.configuration.JdbcConnection;
-import by.fakeonliner.repository.query_constant.LaptopQueryConstant;
-import by.fakeonliner.repository.query_constant.MobileQueryConstant;
+import by.fakeonliner.repository.jdbc_query_constant.LaptopQueryConstant;
+import by.fakeonliner.repository.jdbc_query_constant.MobileQueryConstant;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

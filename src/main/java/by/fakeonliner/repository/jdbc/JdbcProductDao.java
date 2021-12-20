@@ -3,7 +3,7 @@ package by.fakeonliner.repository.jdbc;
 import by.fakeonliner.dto.ProductDto;
 import by.fakeonliner.repository.ProductDao;
 import by.fakeonliner.repository.configuration.JdbcConnection;
-import by.fakeonliner.repository.query_constant.ProductQueryConstant;
+import by.fakeonliner.repository.jdbc_query_constant.ProductQueryConstant;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

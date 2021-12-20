@@ -1,4 +1,4 @@
-package by.fakeonliner.repository.query_constant;
+package by.fakeonliner.repository.jdbc_query_constant;
 
 public class ProductQueryConstant {
     public final static String FIND_BY_MODEL = "SELECT * FROM product_list WHERE model LIKE ?";

@@ -1,4 +1,4 @@
-package by.fakeonliner.repository.query_constant;
+package by.fakeonliner.repository.jdbc_query_constant;
 
 public class MobileQueryConstant {
     public static final String ADD_MOBILE_QUERY = "INSERT INTO mobile (id, type, processor, OS," +
