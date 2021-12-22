@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -21,18 +22,18 @@ public class UserController {
     }
 
     @GetMapping("/registration")
-    public String registration(Model model){
+    public String registration(Model model) {
         model.addAttribute("user", new User());
         return "registration";
     }
 
     @PostMapping("/registration")
     public String registration(@Valid @ModelAttribute("user") User user,
-                               BindingResult bindingResult, Model model){
-        if(bindingResult.hasErrors()) {
+                               BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
             return "registration";
         }
-        if(hibernateUserDao.existByEmail(user.getEmail())) {
+        if (hibernateUserDao.existByEmail(user.getEmail())) {
             model.addAttribute("message", "Such a user exist");
             return "registration";
         } else {
@@ -42,17 +43,17 @@ public class UserController {
     }
 
     @GetMapping("/authorization")
-    public String authorization(Model model){
+    public String authorization(Model model) {
         model.addAttribute("user", new User());
         return "authorization";
     }
 
     @PostMapping("/authorization")
     public String authorization(@ModelAttribute("user") User user, Model model,
-                                HttpSession session){
-        if(hibernateUserDao.existByEmail(user.getEmail())) {
+                                HttpSession session) {
+        if (hibernateUserDao.existByEmail(user.getEmail())) {
             User userFromDB = hibernateUserDao.findByEmail(user.getEmail());
-            if(userFromDB.getEmail().equals(user.getEmail())) {
+            if (userFromDB.getEmail().equals(user.getEmail())) {
                 session.setAttribute("authorizedUser", user);
                 return "redirect:/";
             } else {
@@ -66,15 +67,15 @@ public class UserController {
     }
 
     @GetMapping("/profileUpdate")
-    public String updateUser(@RequestParam("userId") long id, Model model){
+    public String updateUser(@RequestParam("userId") long id, Model model) {
         User user = hibernateUserDao.findById(id);
         model.addAttribute("user", user);
         return "userInfo";
     }
 
     @PostMapping("/profileUpdate")
-    public String updateUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model){
-        if(bindingResult.hasErrors()){
+    public String updateUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
             return "userInfo";
         }
         hibernateUserDao.save(user);
@@ -83,7 +84,7 @@ public class UserController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session){
+    public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/";
     }

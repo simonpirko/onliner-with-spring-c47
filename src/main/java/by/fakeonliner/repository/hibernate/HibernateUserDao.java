@@ -125,21 +125,12 @@ public class HibernateUserDao implements UserDao {
     }
 
     @Override
-    public User findByEmail(String email){
-        try(Session session = sessionFactory.openSession()){
-            return session
-                    .createQuery("from User where email like :email", User.class)
-                    .setParameter("email", email)
-                    .uniqueResult();
-        }
-    }
-
-    @Override
-    public User findById(long id){
-        try(Session session = sessionFactory.openSession()){
+    public User findById(long id) {
+        try (Session session = sessionFactory.openSession()) {
             return session
                     .createQuery("from User where id = :id", User.class)
                     .setParameter("id", id)
                     .uniqueResult();
         }
+    }
 }

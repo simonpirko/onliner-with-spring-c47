@@ -28,7 +28,5 @@ public interface UserDao {
 
     void changeEmail(long userId, String newEmail);
 
-    User findByEmail(String email);
-
     User findById(long id);
 }
