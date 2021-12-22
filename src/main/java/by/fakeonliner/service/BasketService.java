@@ -4,61 +4,56 @@ import by.fakeonliner.dto.BasketProductDto;
 import by.fakeonliner.dto.ProductDto;
 import by.fakeonliner.entity.user.User;
 import by.fakeonliner.repository.BasketDao;
-import by.fakeonliner.repository.inMemory.InMemoryBasketDao;
-import by.fakeonliner.repository.jdbc.JdbcBasketDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Service
 public class BasketService {
-    private final BasketDao jdbcBasketDao = new JdbcBasketDao();
-    private final BasketDao inMemoryBasketDao = new InMemoryBasketDao();
-    private static BasketService instance;
 
-    private BasketService(){};
-
-    public static synchronized BasketService getInstance() {
-        if(instance == null){
-            instance = new BasketService();
-        }
-        return instance;
-    }
+    @Autowired
+    private BasketDao basketDao;
 
     public void addProduct(ProductDto product) {
         BasketProductDto basketProduct = new BasketProductDto();
         setFieldsBasket(product, basketProduct);
         basketProduct.setAmount(1);
-        inMemoryBasketDao.addProduct(basketProduct);
+        basketDao.addProduct(basketProduct);
     }
 
+    @Transactional
     public void addProductDb(BasketProductDto product) {
-        if(jdbcBasketDao.existByProductDto(product)) {
-            int amount = jdbcBasketDao.getProductAmount(product);
+        if (basketDao.existByProductDto(product)) {
+            int amount = basketDao.getProductAmount(product);
             product.setAmount(++amount);
-            jdbcBasketDao.updateProduct(product);
+            basketDao.updateProduct(product);
         } else {
-            jdbcBasketDao.addProduct(product);
+            basketDao.addProduct(product);
         }
     }
 
     public List<BasketProductDto> getProductList(User user) {
-        return inMemoryBasketDao.getBasketProducts(user);
+        return basketDao.getBasketProducts(user);
     }
 
     public List<BasketProductDto> getProductListFromDb(User user) {
-        return jdbcBasketDao.getBasketProducts(user);
+        return basketDao.getBasketProducts(user);
     }
 
+    @Transactional
     public void deleteProductFromBd(BasketProductDto product) {
-        int amount = jdbcBasketDao.getProductAmount(product);
+        int amount = basketDao.getProductAmount(product);
         if (amount > 1) {
-            jdbcBasketDao.updateProduct(product);
+            basketDao.updateProduct(product);
         } else {
-            jdbcBasketDao.deleteProductDb(product);
+            basketDao.deleteProductDb(product);
         }
     }
 
     public void deleteProductFromMemory(BasketProductDto product) {
-        inMemoryBasketDao.deleteProductDb(product);
+        basketDao.deleteProductDb(product);
     }
 
     private void setFieldsBasket(ProductDto product, BasketProductDto productDto) {
