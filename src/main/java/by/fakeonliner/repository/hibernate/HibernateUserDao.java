@@ -30,7 +30,7 @@ public class HibernateUserDao implements UserDao {
     @Override
     public void save(User user) {
         Session session = sessionFactory.openSession();
-        session.save(user);
+        session.saveOrUpdate(user);
         session.close();
     }
 
@@ -123,4 +123,23 @@ public class HibernateUserDao implements UserDao {
                 .setParameter("mail", newEmail).executeUpdate();
         session.close();
     }
+
+    @Override
+    public User findByEmail(String email){
+        try(Session session = sessionFactory.openSession()){
+            return session
+                    .createQuery("from User where email like :email", User.class)
+                    .setParameter("email", email)
+                    .uniqueResult();
+        }
+    }
+
+    @Override
+    public User findById(long id){
+        try(Session session = sessionFactory.openSession()){
+            return session
+                    .createQuery("from User where id = :id", User.class)
+                    .setParameter("id", id)
+                    .uniqueResult();
+        }
 }
