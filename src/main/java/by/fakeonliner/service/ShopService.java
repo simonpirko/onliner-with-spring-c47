@@ -2,23 +2,29 @@ package by.fakeonliner.service;
 
 import by.fakeonliner.entity.shop.Shop;
 import by.fakeonliner.repository.ShopDao;
-import by.fakeonliner.repository.inMemory.InMemoryShopDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Service
+@Transactional
 public class ShopService {
-    private final ShopDao shopDao = new InMemoryShopDao();
+
+    @Autowired
+    private ShopDao shopDao;
 
     public boolean save(Shop shop) {
 
         if (shopDao.existByEmail(shop.getEmail())) {
-          shopDao.save(shop);
-          return true;
+            shopDao.save(shop);
+            return true;
         } else {
-          return false; 
+            return false;
         }
     }
-  
+
     public Shop findByEmail(String email) {
         if (shopDao.existByEmail(email)) {
             return shopDao.getShopByEmail(email);

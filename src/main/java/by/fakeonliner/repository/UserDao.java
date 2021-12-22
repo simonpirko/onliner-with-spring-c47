@@ -6,15 +6,13 @@ import java.util.List;
 
 public interface UserDao {
 
-    boolean existByLogin(String userName);
-
-    User findByUsername(String userName);
-
     List<User> getAllUsers();
 
     void save(User user);
 
     void delete(User user);
+
+    User findByEmail(String email);
 
     boolean existByEmail(String email);
 
@@ -23,8 +21,6 @@ public interface UserDao {
     void changeFirstName(long userId, String newFirstName);
 
     void changeLastName(long userId, String newLastName);
-
-    void changeUsername(long userId, String newUsername);
 
     void changePassword(long userId, String newPassword);
 

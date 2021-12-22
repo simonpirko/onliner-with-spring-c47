@@ -18,7 +18,7 @@ public interface ProductDao {
 
     List<ProductDto> findByPrice(double min, double max, String category);
 
-    void edit(long id, Object object);
+    void edit(ProductDto productDto);
 
     void delete(long id);
 

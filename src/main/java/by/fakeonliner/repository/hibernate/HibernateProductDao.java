@@ -31,53 +31,60 @@ public class HibernateProductDao implements ProductDao {
     @Override
     public boolean existByModel(String model) {
         Session session = sessionFactory.openSession();
-        return session.createQuery("from Product where model = :mo").setParameter("mo", model).uniqueResult() != null;
+        boolean exist = session.createQuery("from Product where model = :mo")
+                .setParameter("mo", model).uniqueResult() != null;
+        session.close();
+        return exist;
     }
 
     @Override
     public List<ProductDto> findByModel(String model) {
         Session session = sessionFactory.openSession();
-        Query query = session.createQuery("from Product p where p.model = :pm", Product.class);
-        query.setParameter("pm", model);
-        List<ProductDto> list = query.getResultList();
+        List list = session.createQuery("from Product where model = :pm", Product.class)
+                .setParameter("pm", model)
+                .getResultList();
+        session.close();
         return list;
     }
 
     @Override
     public List<ProductDto> findByBrand(String name, String category) {
         Session session = sessionFactory.openSession();
-        Query query = session.createQuery("from Product p where model = :mo and categoryProduct = :cat")
+        List list = session.createQuery("from Product where model = :mo and categoryProduct = :cat")
                 .setParameter("mo", name)
-                .setParameter("cat", category);
-        List<ProductDto> productDtoList = query.getResultList();
-        return productDtoList;
+                .setParameter("cat", category)
+                .getResultList();
+        session.close();
+        return list;
     }
 
     @Override
     public List<ProductDto> findByAllFromCategory(String category) {
         Session session = sessionFactory.openSession();
-        Query query = session.createQuery("from Product p where p.categoryProduct = :pc", Product.class);
-        query.setParameter("pc", category);
-        List<ProductDto> list = query.getResultList();
+        List list = session.createQuery("from Product where categoryProduct = :pc", Product.class)
+                .setParameter("pc", category)
+                .getResultList();
+        session.close();
         return list;
     }
 
     @Override
     public List<ProductDto> findByPrice(double min, double max, String category) {
         Session session = sessionFactory.openSession();
-        Query query = session.createQuery("from Product p where price < :min and price > :max and categoryProduct = :cat")
+        List list = session.createQuery("from Product where price < :min and price > :max and categoryProduct = :cat")
                 .setParameter("min", min)
                 .setParameter("max", max)
-                .setParameter("cat", category);
-        List<ProductDto> productDtoList = query.getResultList();
-        return productDtoList;
+                .setParameter("cat", category)
+                .getResultList();
+        session.close();
+        return list;
     }
 
     @Override
-    public void edit(long id, Object object) {
+    public void edit(ProductDto productDto) {
         Session session = sessionFactory.openSession();
-        Product product = session.find(Product.class, id);
-//        session.saveOrUpdate();
+        session.saveOrUpdate(productDto);
+        session.close();
     }
 
     @Override
