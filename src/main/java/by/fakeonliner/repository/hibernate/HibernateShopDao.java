@@ -72,4 +72,14 @@ public class HibernateShopDao implements ShopDao {
                 .setParameter("id", shop.getId())
                 .executeUpdate();
     }
+
+    @Override
+    public Shop findById(long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session
+                    .createQuery("from Shop where id = :id", Shop.class)
+                    .setParameter("id", id)
+                    .uniqueResult();
+        }
+    }
 }

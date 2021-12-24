@@ -12,4 +12,5 @@ public interface ShopDao {
     List<Shop> getShopList();
     void edit(Shop shop);
     void delete(Shop shop);
+    Shop findById(long id);
 }
