@@ -9,8 +9,8 @@ import java.util.List;
 @Repository
 public interface UserDao {
 
-    boolean save(User user);
-    boolean delete(User user);
+    void save(User user);
+    void delete(User user);
     List<User> getAllUsers();
     User findByEmail(String email);
     boolean existByEmail(String email);
