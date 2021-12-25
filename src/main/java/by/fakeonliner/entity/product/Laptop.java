@@ -7,12 +7,14 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
 @Entity
-public class Laptop extends Product{
+public class Laptop extends Product {
+
 
     private String type;
 
