@@ -1,4 +1,4 @@
-package by.fakeonliner.dao.hibernate;
+package by.fakeonliner.dao;
 
 
 import by.fakeonliner.entity.user.User;

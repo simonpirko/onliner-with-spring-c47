@@ -1,6 +1,7 @@
 package by.fakeonliner.dao.hibernate;
 
 
+import by.fakeonliner.dao.UserDao;
 import by.fakeonliner.entity.user.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
