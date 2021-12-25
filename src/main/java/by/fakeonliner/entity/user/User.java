@@ -1,14 +1,16 @@
 package by.fakeonliner.entity.user;
 
 import lombok.AllArgsConstructor;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 @Entity
 @Table(name = "users")
 public class User {
@@ -18,7 +20,7 @@ public class User {
     private long id;
 
     @NotBlank(message = "Empty field")
-    private String email;  //registration, authorization
+    private String email;
 
     @NotBlank(message = "Empty field")
     private String password;
@@ -35,7 +37,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private RoleUser roleUser;
 
-    public User(long id) {
-        this.id = id;
-    }
+    @OneToOne(cascade = CascadeType.ALL)
+    private Basket basket;
+
 }

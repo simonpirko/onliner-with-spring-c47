@@ -1,9 +1,13 @@
 package by.fakeonliner.entity.shop;
 
-import by.fakeonliner.entity.product.Comment;
-import lombok.*;
+import by.fakeonliner.entity.product.Product;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Data
@@ -33,16 +37,11 @@ public class Shop {
     private String contactAddress;
 
     private String description;
-    private String rating;
-    private int countRating;
+
+    private double amountOfMarks;
+
+    private int numberOfMarks;
 
     @OneToMany
-    private List<Comment> comments;
-
-    public Shop(String password, String name, String phoneNumber, String email) {
-        this.password = password;
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-    }
+    private List<Product> products;
 }
