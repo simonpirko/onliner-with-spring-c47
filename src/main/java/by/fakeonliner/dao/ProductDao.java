@@ -1,5 +1,6 @@
 package by.fakeonliner.dao;
 
+import by.fakeonliner.entity.product.Laptop;
 import by.fakeonliner.entity.product.Product;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +15,7 @@ public interface ProductDao {
 
     List<Product> findByModel(String model);
 
-    List<Product> findByBrand(String name, String category);
+    List<Laptop> findByBrand(String name, String category);
 
     List<Product> findByAllFromCategory(String category);
 

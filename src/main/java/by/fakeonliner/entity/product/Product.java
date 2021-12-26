@@ -21,7 +21,7 @@ public class Product {
 
     private String brand;
 
-    private BigDecimal price;
+    private float price;
 
     private String model;
 

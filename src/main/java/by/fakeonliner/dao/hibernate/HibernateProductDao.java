@@ -1,6 +1,7 @@
 package by.fakeonliner.dao.hibernate;
 
 import by.fakeonliner.dao.ProductDao;
+import by.fakeonliner.entity.product.Laptop;
 import by.fakeonliner.entity.product.Product;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -48,12 +49,12 @@ public class HibernateProductDao implements ProductDao {
     }
 
     @Override
-    public List<Product> findByBrand(String name, String category) {
+    public List<Laptop> findByBrand(String name, String category) {
         try (Session session = sessionFactory.openSession()) {
-//            return session.createQuery("from Product p where model = :mo and  = :cat")
-//                    .setParameter("mo", name)
-//                    .setParameter("cat", category)
-//                    .getResultList();
+            if(category == "Laptop") {
+                return session.createQuery("select p from Laptop p",Laptop.class)
+                        .getResultList();
+            }
             return null;
         } catch (NoResultException e) {
             return null;
