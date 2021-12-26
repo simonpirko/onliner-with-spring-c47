@@ -76,4 +76,16 @@ public class HibernateShopDao implements ShopDao {
             return;
         }
     }
+
+    @Override
+    public Shop findById(long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session
+                    .createQuery("from Shop where id = :id", Shop.class)
+                    .setParameter("id", id)
+                    .uniqueResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 }
