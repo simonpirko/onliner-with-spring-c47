@@ -1,6 +1,7 @@
 package by.fakeonliner.dao.hibernate;
 
 import by.fakeonliner.dao.ProductDao;
+import by.fakeonliner.entity.product.Laptop;
 import by.fakeonliner.entity.product.Product;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -50,10 +52,14 @@ public class HibernateProductDao implements ProductDao {
     @Override
     public List<Product> findByBrand(String name, String category) {
         try (Session session = sessionFactory.openSession()) {
-//            return session.createQuery("from Product p where model = :mo and  = :cat")
-//                    .setParameter("mo", name)
-//                    .setParameter("cat", category)
+//            List<Product> product = session.createQuery("from Product", Product.class)
 //                    .getResultList();
+//            List<Product> result = new ArrayList<>();
+//            for (Product temp : product) {
+//                if(temp instanceof Laptop){
+//                    result.add(temp);
+//                }
+//            }
             return null;
         } catch (NoResultException e) {
             return null;
