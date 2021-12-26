@@ -1,6 +1,7 @@
 package by.fakeonliner.service;
 
 import by.fakeonliner.dao.ProductDao;
+import by.fakeonliner.entity.product.Laptop;
 import by.fakeonliner.entity.product.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,10 @@ public class ProductService {
 
     @Autowired
     private ProductDao productDao;
+
+    public void save(Product product){
+        productDao.save(product);
+    }
 
     public Product findById(int id) {
         return productDao.findById(id);
@@ -29,7 +34,7 @@ public class ProductService {
         productDao.delete(id);
     }
 
-    public List<Product> findByBrand(String name, String category) {
+    public List<Laptop> findByBrand(String name, String category) {
         return productDao.findByBrand(name, category);
     }
 

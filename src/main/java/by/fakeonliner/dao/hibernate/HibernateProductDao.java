@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -50,16 +49,12 @@ public class HibernateProductDao implements ProductDao {
     }
 
     @Override
-    public List<Product> findByBrand(String name, String category) {
+    public List<Laptop> findByBrand(String name, String category) {
         try (Session session = sessionFactory.openSession()) {
-//            List<Product> product = session.createQuery("from Product", Product.class)
-//                    .getResultList();
-//            List<Product> result = new ArrayList<>();
-//            for (Product temp : product) {
-//                if(temp instanceof Laptop){
-//                    result.add(temp);
-//                }
-//            }
+            if(category == "Laptop") {
+                return session.createQuery("select p from Laptop p",Laptop.class)
+                        .getResultList();
+            }
             return null;
         } catch (NoResultException e) {
             return null;

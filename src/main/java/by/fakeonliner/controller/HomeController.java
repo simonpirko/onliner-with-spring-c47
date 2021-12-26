@@ -2,7 +2,9 @@ package by.fakeonliner.controller;
 
 
 import by.fakeonliner.dao.hibernate.HibernateUserDao;
+import by.fakeonliner.entity.product.Product;
 import by.fakeonliner.entity.user.User;
+import by.fakeonliner.service.ProductService;
 import by.fakeonliner.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 
     private final UserService userService;
+    private final ProductService productService;
 
-    public HomeController(UserService userService) {
+    public HomeController(UserService userService, ProductService productService) {
         this.userService = userService;
+        this.productService = productService;
     }
 
     @GetMapping
@@ -32,6 +36,17 @@ public class HomeController {
     @PostMapping
     public String index(Model model,User user){
         System.out.println(user.toString());
+
+        Product product = new Product();
+        product.setBrand("brand");
+        product.setPrice(900);
+        product.setModel("model");
+        product.setMarketLaunchDate(2021);
+        product.setAverageRating(20);
+        product.setDescription("description");
+        product.setUrlImage("url");
+        productService.save(product);
+
         userService.save(user);
         return "redirect:/";
     }

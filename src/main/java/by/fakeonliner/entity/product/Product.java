@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Entity
-public abstract class Product {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public abstract class Product {
 
     private String brand;
 
-    private BigDecimal price;
+    private float price;
 
     private String model;
 
