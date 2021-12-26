@@ -1,9 +1,11 @@
-package by.fakeonliner.repository;
+package by.fakeonliner.dao;
 
 import by.fakeonliner.entity.shop.Shop;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface ShopDao {
 
     void save(Shop shop);

@@ -5,16 +5,26 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Entity;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Mobile extends Product {
+@Entity
+public class Mobile extends Product{
+
     private String mobileType;
+
     private String processor;
+
     private String operationSystem;
+
     private double displaySize;
+
     private double frequency;
+
     private int ram;
+
     private String displayType;
 }

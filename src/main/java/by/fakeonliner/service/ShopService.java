@@ -1,7 +1,7 @@
 package by.fakeonliner.service;
 
+import by.fakeonliner.dao.ShopDao;
 import by.fakeonliner.entity.shop.Shop;
-import by.fakeonliner.repository.ShopDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,12 +16,11 @@ public class ShopService {
     private ShopDao shopDao;
 
     public boolean save(Shop shop) {
-
         if (shopDao.existByEmail(shop.getEmail())) {
+            return false;
+        } else {
             shopDao.save(shop);
             return true;
-        } else {
-            return false;
         }
     }
 

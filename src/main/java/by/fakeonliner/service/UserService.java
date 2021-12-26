@@ -1,7 +1,7 @@
 package by.fakeonliner.service;
 
+import by.fakeonliner.dao.hibernate.HibernateUserDao;
 import by.fakeonliner.entity.user.User;
-import by.fakeonliner.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,60 +9,42 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class UserService {
 
     @Autowired
-    private UserDao userDao;
+    private HibernateUserDao hibernateUserDao;
 
-    @Transactional
-    public User findByEmail(String email) {
-        if (userDao.existByEmail(email)) {
-            return userDao.findByEmail(email);
-        }
-        return null;
+    public void save(User user) {
+        hibernateUserDao.save(user);
+    }
+
+    public void delete(User user) {
+        hibernateUserDao.delete(user);
     }
 
     public List<User> getAllUsers() {
-        return userDao.getAllUsers();
+        return hibernateUserDao.getAllUsers();
     }
 
-//    public boolean existByUsername(String username) {
-//        return userDao.existByLogin(username);
-//    }
-
-    public void save(User user) {
-        userDao.save(user);
-    }
-
-    public boolean existByPhoneNumber(String phoneNumber) {
-        return userDao.existByPhoneNumber(phoneNumber);
+    public User findByEmail(String email) {
+        return hibernateUserDao.findByEmail(email);
     }
 
     public boolean existByEmail(String email) {
-        return userDao.existByEmail(email);
+        return hibernateUserDao.existByEmail(email);
     }
 
-//    public void changeUsername (long userId, String newUsername){
-//        userDao.changeUsername(userId, newUsername);
-//    }
-
-    public void changePassword (long userId, String newPassword){
-        userDao.changePassword(userId, newPassword);
+    public boolean existByPhoneNumber(String phoneNumber) {
+        return hibernateUserDao.existByPhoneNumber(phoneNumber);
     }
 
-    public void changePhoneNumber(long userId, String newPhoneNumber){
-        userDao.changePhoneNumber(userId, newPhoneNumber);
+
+    public User findById(long id) {
+        return hibernateUserDao.findById(id);
     }
 
-    public void changeEmail(long userId, String newEmail){
-        userDao.changeEmail(userId, newEmail);
-    }
-
-    public void changeFirstName(long userId, String newFirstName){
-        userDao.changeFirstName(userId, newFirstName);
-    }
-
-    public void changeLastName(long userId, String newLastName){
-        userDao.changeLastName(userId, newLastName);
+    public void edit(User user) {
+        hibernateUserDao.edit(user);
     }
 }
