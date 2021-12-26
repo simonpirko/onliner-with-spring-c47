@@ -15,8 +15,12 @@ public class UserService {
     @Autowired
     private HibernateUserDao hibernateUserDao;
 
-    public void save(User user) {
+    public boolean save(User user) {
+        if(existByEmail(user.getEmail())){
+            return false;
+        }
         hibernateUserDao.save(user);
+        return true;
     }
 
     public void delete(User user) {
