@@ -19,6 +19,6 @@ public class DescriptionFeatureValue {
     private long id;
     private String name;
 
-    @OneToOne
+    @ManyToOne
     private DescriptionFeature descriptionFeature;
 }

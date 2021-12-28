@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode
-@Entity
+//@Data
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@EqualsAndHashCode
+//@Entity
 @Deprecated
-public class Mobile extends Product{
+public class Mobile{
 
     private String mobileType;
 

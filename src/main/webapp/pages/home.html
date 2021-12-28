@@ -18,5 +18,14 @@
     <input type="text" th:field="*{phoneNumber}" placeholder="phoneNumber">
     <button>Submit</button>
 </form>
+
+<form action="#" th:action="@{/}" th:object="${category}" method="post">
+    <input type="text" th:field="*{name}" placeholder="name">
+    <button>Submit</button>
+</form>
+<form action="#" th:action="@{/}" th:object="${descFeature}" method="post">
+    <input type="text" th:field="*{}" placeholder="name">
+    <button>Submit</button>
+</form>
 </body>
 </html>
