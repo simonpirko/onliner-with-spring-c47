@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductDao {
+public interface ProductDao<T> {
 
     void save(Product product);
 
@@ -15,7 +15,7 @@ public interface ProductDao {
 
     List<Product> findByModel(String model);
 
-    List<Laptop> findByBrand(String name, String category);
+    List<Product> getByCategoryId(long categoryId);
 
     List<Product> findByAllFromCategory(String category);
 
@@ -24,6 +24,10 @@ public interface ProductDao {
     void edit(Product product);
 
     void delete(long id);
+
+    void findProduct(T product);
+
+//    Class<T> getClass;
 
     Product findById(int id);
 }

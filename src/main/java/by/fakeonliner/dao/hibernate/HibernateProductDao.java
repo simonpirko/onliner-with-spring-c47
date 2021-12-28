@@ -1,7 +1,6 @@
 package by.fakeonliner.dao.hibernate;
 
 import by.fakeonliner.dao.ProductDao;
-import by.fakeonliner.entity.product.Laptop;
 import by.fakeonliner.entity.product.Product;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,7 +11,7 @@ import javax.persistence.NoResultException;
 import java.util.List;
 
 @Repository
-public class HibernateProductDao implements ProductDao {
+public class HibernateProductDao implements ProductDao<Product> {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -49,16 +48,15 @@ public class HibernateProductDao implements ProductDao {
     }
 
     @Override
-    public List<Laptop> findByBrand(String name, String category) {
+    public List<Product> getByCategoryId(long categoryId) {
         try (Session session = sessionFactory.openSession()) {
-            if(category == "Laptop") {
-                return session.createQuery("select p from Laptop p",Laptop.class)
-                        .getResultList();
-            }
-            return null;
+            return session.createQuery("from Product p where p.categoryId = :ci")
+                    .setParameter("ci", categoryId)
+                    .getResultList();
         } catch (NoResultException e) {
             return null;
         }
+
     }
 
     @Override
@@ -102,11 +100,25 @@ public class HibernateProductDao implements ProductDao {
     }
 
     @Override
+    public void findProduct(Product product) {
+
+    }
+
+    @Override
     public Product findById(int id) {
         try (Session session = sessionFactory.openSession()) {
             return session.find(Product.class, id);
         } catch (NoResultException e) {
             return null;
+        }
+    }
+
+    public void findProduct() {
+        try (Session session = sessionFactory.openSession()) {
+            List test = session.createQuery("select p from Mobile p ", Product.class).getResultList();
+            System.out.println(test);
+        } catch (NoResultException e) {
+            e.printStackTrace();
         }
     }
 }

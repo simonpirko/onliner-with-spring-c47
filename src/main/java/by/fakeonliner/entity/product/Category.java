@@ -6,27 +6,20 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
 @Entity
-@Deprecated
-public class Mobile extends Product{
+public class Category {
 
-    private String mobileType;
-
-    private String processor;
-
-    private String operationSystem;
-
-    private double displaySize;
-
-    private double frequency;
-
-    private int ram;
-
-    private String displayType;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    private String name;
 
 }

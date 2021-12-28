@@ -1,6 +1,8 @@
 package by.fakeonliner.controller;
 
 
+import by.fakeonliner.entity.product.Laptop;
+import by.fakeonliner.entity.product.Mobile;
 import by.fakeonliner.entity.product.Product;
 import by.fakeonliner.entity.user.User;
 import by.fakeonliner.service.ProductService;
@@ -33,7 +35,7 @@ public class HomeController {
     public String index(Model model,User user){
         System.out.println(user.toString());
 
-        Product product = new Product();
+        Mobile product = new Mobile();
         product.setBrand("brand");
         product.setPrice(900);
         product.setModel("model");
@@ -41,9 +43,23 @@ public class HomeController {
         product.setAverageRating(20);
         product.setDescription("description");
         product.setUrlImage("url");
+        product.setMobileType("Type");
         productService.save(product);
+        Class aClass = product.getClass();
+        productService.findProduct();
+//        userService.save(user);
 
-        userService.save(user);
+        Laptop product2 = new Laptop();
+        product2.setBrand("brand");
+        product2.setPrice(900);
+        product2.setModel("model");
+        product2.setMarketLaunchDate(2021);
+        product2.setAverageRating(20);
+        product2.setDescription("description");
+        product2.setUrlImage("url");
+        product2.setVideoCard("video");
+        productService.save(product2);
+        productService.findProduct();
         return "redirect:/";
     }
 }

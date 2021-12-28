@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Entity
+@Deprecated
 public class Laptop extends Product {
 
 

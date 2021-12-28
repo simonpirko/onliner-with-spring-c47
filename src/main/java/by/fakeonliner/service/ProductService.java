@@ -34,8 +34,8 @@ public class ProductService {
         productDao.delete(id);
     }
 
-    public List<Laptop> findByBrand(String name, String category) {
-        return productDao.findByBrand(name, category);
+    public List<Product> getByCategoryId(long categoryId) {
+        return productDao.getByCategoryId(categoryId);
     }
 
     public List<Product> findByPrice(double min, double max, String category) {
@@ -45,4 +45,10 @@ public class ProductService {
     public List<Product> findByAllFromCategory(String category) {
         return productDao.findByAllFromCategory(category);
     }
+
+    public void findProduct(){
+//        productDao.findProduct(ProductDao.getClass);
+
+    }
+
 }
