@@ -43,4 +43,6 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     private Basket basket;
 
+    public void setRoleUser(RoleUser user) {
+    }
 }

@@ -2,6 +2,7 @@ package by.fakeonliner.controller;
 
 import by.fakeonliner.dao.hibernate.HibernateUserDao;
 import by.fakeonliner.entity.shop.Shop;
+import by.fakeonliner.entity.user.RoleUser;
 import by.fakeonliner.entity.user.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,12 +22,12 @@ public class UserController {
 
     @GetMapping("/registration")
     public String registration(Model model){
-        model.addAttribute("user", new User());
+        model.addAttribute("newUser", new User());
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String registration(@ModelAttribute("user") User user, Model model, BindingResult result){
+    public String registration(@ModelAttribute("newUser") User user, Model model, BindingResult result){
         try {
             if (result.hasErrors()) {
                 return "registration";
@@ -36,6 +37,7 @@ public class UserController {
                 model.addAttribute("message", "Email already exist");
                 return "registration";
             } else {
+                user.setRoleUser(RoleUser.USER);
                 hibernateUserDao.save(user);
                 return "redirect:/user/authorization";
             }
