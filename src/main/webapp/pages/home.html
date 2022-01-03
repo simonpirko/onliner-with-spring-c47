@@ -23,9 +23,22 @@
     <input type="text" th:field="*{name}" placeholder="name">
     <button>Submit</button>
 </form>
-<form action="#" th:action="@{/}" th:object="${descFeature}" method="post">
-    <input type="text" th:field="*{}" placeholder="name">
-    <button>Submit</button>
+<form>
+    <table>
+        <div class="list-group" id="list-tab" style="margin-top: 20px" role="tablist">
+            <div class="d-grid gap-2">
+                <tr th:each="category,iter:${categoryList}">
+                    <td th:utext="${iter.count}"></td>
+                    <td><a th:href="@{/category(id=${category.id})}"><h2 th:text="${category.name}"></h2></a></td>
+                </tr>
+
+            </div>
+        </div>
+    </table>
 </form>
+<!--<form action="#" th:action="@{/}" th:object="${descFeature}" method="post">-->
+<!--    <input type="text" th:field="*{}" placeholder="name">-->
+<!--    <button>Submit</button>-->
+<!--</form>-->
 </body>
 </html>
