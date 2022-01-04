@@ -14,7 +14,7 @@ import javax.persistence.NoResultException;
 import java.util.List;
 
 @Repository
-public class HibernateProductDao implements ProductDao<Product> {
+public class HibernateProductDao implements ProductDao {
 
     @Autowired
     private SessionFactory sessionFactory;

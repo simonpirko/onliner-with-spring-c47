@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductDao<T> {
+public interface ProductDao {
 
     void save(Product product);
 
