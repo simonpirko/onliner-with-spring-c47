@@ -3,42 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <link rel="stylesheet" href="/pages/styles/home.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 </head>
 <body>
-
-<form action="#" th:action="@{/}" th:object="${user}" method="post">
-    <input type="text" th:field="*{email}" placeholder="email">
-
-    <input type="text" th:field="*{password}" placeholder="password">
-
-    <input type="text" th:field="*{firstName}" placeholder="firstName">
-
-    <input type="text" th:field="*{lastName}" placeholder="lastName">
-
-    <input type="text" th:field="*{phoneNumber}" placeholder="phoneNumber">
-    <button>Submit</button>
-</form>
-
-<form action="#" th:action="@{/}" th:object="${category}" method="post">
-    <input type="text" th:field="*{name}" placeholder="name">
-    <button>Submit</button>
-</form>
-<form>
-    <table>
-        <div class="list-group" id="list-tab" style="margin-top: 20px" role="tablist">
-            <div class="d-grid gap-2">
-                <tr th:each="category,iter:${categoryList}">
-                    <td th:utext="${iter.count}"></td>
-                    <td><a th:href="@{/category(id=${category.id})}"><h2 th:text="${category.name}"></h2></a></td>
-                </tr>
-
+<div th:replace="_header :: content"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-3 mb-2" style="margin-top: 40px">
+            <p><a class="btn btn-primary w-100 d-flex align-items-center justify-content-between"
+                  data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true"
+                  aria-controls="collapseExample"> <span class="fas fa-bars"><span
+                    class="ps-3">Categories</span></span> <span class="fas fa-chevron-down"></span> </a></p>
+            <div class="collapse show border" id="collapseExample" style="border-radius: 7px">
+                <ul class="list-unstyled">
+                    <th:block th:each="category : ${categories}">
+                        <li>
+                            <a class="dropdown-item" th:href="@{/product/category(id=${category.id})}">
+                                <h4 th:text="${category.name}">
+                                </h4>
+                            </a>
+                        </li>
+                    </th:block>
+                </ul>
             </div>
         </div>
-    </table>
-</form>
-<!--<form action="#" th:action="@{/}" th:object="${descFeature}" method="post">-->
-<!--    <input type="text" th:field="*{}" placeholder="name">-->
-<!--    <button>Submit</button>-->
-<!--</form>-->
+        <div class="col-9 mb-2">
+            <div class="wrapper">
+                <section id="products">
+                    <div class="container py-3">
+                        <div class="row">
+                            <th:block th:each="product : ${products}">
+                                <div class="col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1 pt-lg-4 pt-4">
+                                    <div class="card">
+                                        <a th:href="@{/product/personal(id=${product.id})}">
+                                            <img class="card-img-top" style="height: 270px; width: 289px"
+                                                 th:src="${product.urlImage}"/>
+                                        </a>
+                                        <div class="card-body">
+
+                                            <h6 class="font-weight-bold pt-1">
+                                                <a th:href="@{/product/personal(id=${product.id})}"
+                                                   th:utext="${product.model}"></a>
+                                            </h6>
+                                            <div class="text-muted description" th:utext="${product.description}">
+                                            </div>
+                                            <div class="d-flex align-items-center product"><span
+                                                    class="fas fa-star"></span>
+                                                <span class="fas fa-star"></span> <span class="fas fa-star"></span>
+                                                <span
+                                                        class="fas fa-star"></span> <span
+                                                        class="far fa-star"></span>
+                                            </div>
+                                            <div class="d-flex align-items-center justify-content-between pt-3">
+                                                <div class="d-flex flex-column">
+                                                    <div class="text-muted rebate"
+                                                         th:utext="${product.price}"></div>
+                                                </div>
+                                                <form action="#"
+                                                      th:action="@{/basket/saveInBasket(id=${product.id})}"
+                                                      method="get">
+                                                    <input type="submit" class="btn btn-primary" value="Buy now"/>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th:block>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

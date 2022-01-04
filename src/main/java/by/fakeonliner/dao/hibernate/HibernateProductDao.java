@@ -1,9 +1,6 @@
 package by.fakeonliner.dao.hibernate;
 
 import by.fakeonliner.dao.ProductDao;
-import by.fakeonliner.entity.product.Category;
-import by.fakeonliner.entity.product.DescriptionFeature;
-import by.fakeonliner.entity.product.DescriptionFeatureValue;
 import by.fakeonliner.entity.product.Product;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -101,6 +98,13 @@ public class HibernateProductDao implements ProductDao {
             return session.find(Product.class, id);
         } catch (NoResultException e) {
             return null;
+        }
+    }
+
+    @Override
+    public List getAllProducts() {
+        try(Session session = sessionFactory.openSession()) {
+            return session.createQuery("from Product").list();
         }
     }
 }

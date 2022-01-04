@@ -23,4 +23,6 @@ public interface ProductDao {
     void delete(long id);
 
     Product findById(long id);
+
+    List<Product> getAllProducts();
 }

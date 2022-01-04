@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/category")
+@RequestMapping("/product")
 public class ProductController {
 
     @Autowired
@@ -21,16 +21,26 @@ public class ProductController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping
+    @GetMapping("/category")
     public String category(Model model, long id) {
         List<Product> productList = productService.getByCategoryId(id);
         model.addAttribute("productList", productList);
         return "product/category";
     }
 
-    @PostMapping
+    @PostMapping("/category")
     public String category(Model model) {
 
         return "product/category";
+    }
+
+    @GetMapping("/personal")
+    public String personal(Model model, long id) {
+        return "product/product";
+    }
+
+    @PostMapping("/personal")
+    public String personal(Model model) {
+       return "product/product";
     }
 }
