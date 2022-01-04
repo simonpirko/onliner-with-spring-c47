@@ -30,12 +30,10 @@ public class HomeController {
 
     @GetMapping
     public String index(Model model) {
-        List<Category> category = categoryService.getCategory();
+        List<Category> categoryList = categoryService.getCategory();
         List<Product> productList = productService.getAllProducts();
-        Category category1 = new Category();
         model.addAttribute("user", new User());
-        model.addAttribute("categoryList", category);
-        model.addAttribute("category", category1);
+        model.addAttribute("categoryList", categoryList);
         model.addAttribute("productList", productList);
         model.addAttribute("descFeature", new DescriptionFeature());
         model.addAttribute("descFeatureVal", new DescriptionFeatureValue());
@@ -43,8 +41,8 @@ public class HomeController {
     }
 
     @PostMapping
-    public String index(Model model,User user,Category category,DescriptionFeature descriptionFeature,DescriptionFeatureValue descriptionFeatureValue){
-        categoryService.saveCategory(category);
+    public String index(Model model,User user,DescriptionFeature descriptionFeature,DescriptionFeatureValue descriptionFeatureValue){
+
         return "redirect:/";
     }
 }
