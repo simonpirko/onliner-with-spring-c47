@@ -13,7 +13,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Entity
-
 public class DescriptionFeatureValue {
 
     @Id

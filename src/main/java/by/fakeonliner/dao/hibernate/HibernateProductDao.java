@@ -1,7 +1,9 @@
 package by.fakeonliner.dao.hibernate;
 
 import by.fakeonliner.dao.ProductDao;
-import by.fakeonliner.entity.product.Laptop;
+import by.fakeonliner.entity.product.Category;
+import by.fakeonliner.entity.product.DescriptionFeature;
+import by.fakeonliner.entity.product.DescriptionFeatureValue;
 import by.fakeonliner.entity.product.Product;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,6 +19,7 @@ public class HibernateProductDao implements ProductDao {
     @Autowired
     private SessionFactory sessionFactory;
 
+
     @Override
     public void save(Product product) {
         try (Session session = sessionFactory.openSession()) {
@@ -29,9 +32,8 @@ public class HibernateProductDao implements ProductDao {
     @Override
     public boolean existByModel(String model) {
         try (Session session = sessionFactory.openSession()) {
-            boolean exist = session.createQuery("from Product where model = :mo")
+            return session.createQuery("from Product where model = :mo")
                     .setParameter("mo", model).uniqueResult() != null;
-            return exist;
         } catch (NoResultException e) {
             return false;
         }
@@ -49,36 +51,28 @@ public class HibernateProductDao implements ProductDao {
     }
 
     @Override
-    public List<Laptop> findByBrand(String name, String category) {
+    public List<Product> findByCategoryId(long categoryId) {
         try (Session session = sessionFactory.openSession()) {
-            if(category == "Laptop") {
-                return session.createQuery("select p from Laptop p",Laptop.class)
-                        .getResultList();
-            }
-            return null;
+            return session.createQuery("from Product p where p.categoryId = :ci")
+                    .setParameter("ci", categoryId)
+                    .getResultList();
         } catch (NoResultException e) {
             return null;
         }
+
     }
 
     @Override
-    public List<Product> findByAllFromCategory(String category) {
+    public List<Product> findByPrice(double min, double max, long categoryId) {
         try (Session session = sessionFactory.openSession()) {
-
+            return session.createQuery("from Product p where p.price > :min and price < :max and p.categoryId = :categoryId")
+                    .setParameter("min", min)
+                    .setParameter("max", max)
+                    .setParameter("categoryId", categoryId)
+                    .getResultList();
         } catch (NoResultException e) {
-
+            return null;
         }
-        return null;
-    }
-
-    @Override
-    public List<Product> findByPrice(double min, double max, String category) {
-        try (Session session = sessionFactory.openSession()) {
-
-        } catch (NoResultException e) {
-
-        }
-        return null;
     }
 
     @Override
@@ -102,7 +96,7 @@ public class HibernateProductDao implements ProductDao {
     }
 
     @Override
-    public Product findById(int id) {
+    public Product findById(long id) {
         try (Session session = sessionFactory.openSession()) {
             return session.find(Product.class, id);
         } catch (NoResultException e) {

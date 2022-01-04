@@ -1,7 +1,6 @@
 package by.fakeonliner.dao;
 
-import by.fakeonliner.entity.product.Laptop;
-import by.fakeonliner.entity.product.Product;
+import by.fakeonliner.entity.product.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,15 +14,13 @@ public interface ProductDao {
 
     List<Product> findByModel(String model);
 
-    List<Laptop> findByBrand(String name, String category);
+    List<Product> findByCategoryId(long categoryId);
 
-    List<Product> findByAllFromCategory(String category);
-
-    List<Product> findByPrice(double min, double max, String category);
+    List<Product> findByPrice(double min, double max, long categoryId);
 
     void edit(Product product);
 
     void delete(long id);
 
-    Product findById(int id);
+    Product findById(long id);
 }
