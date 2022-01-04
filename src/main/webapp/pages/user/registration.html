@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+</head>
+<body>
+<div th:replace="_header :: content"></div>
+<div class="container">
+    <div class="row justify-content-center mt-4">
+        <div class="col-sm-4">
+            <form action="#" th:action="@{/user/registration}" th:object="${newUser}" th:method="post">
+                <div class="mb-3">
+                    <input type="text" class="form-control" th:field="*{email}" placeholder="Email"
+                           aria-describedby="usernameHelp" required/>
+                    <div id="usernameHelp" class="form-text">
+                        <p th:if="${#fields.hasErrors('email')}" style="color: red" th:errors="*{email}"></p>
+                        <p th:if="${message == true}" style="color:red">Email already exist</p>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" th:field="*{password}" placeholder="Password"
+                           aria-describedby="passwordHelp" required/>
+                    <th:block th:if="${#fields.hasErrors('password')}">
+                        <div id="passwordHelp" class="form-text">
+                            <p style="color: red" th:errors="*{password}"></p>
+                        </div>
+                    </th:block>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-sm-5">
+                        <button type="submit" class="btn btn-primary">Create account</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-sm-3 ms-4 mt-3">
+            <p>You already have an account? <a th:href="@{/user/authorization}">Sing in</a></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
