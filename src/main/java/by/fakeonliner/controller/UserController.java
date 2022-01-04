@@ -23,19 +23,20 @@ public class UserController {
     @GetMapping("/registration")
     public String registration(Model model){
         model.addAttribute("newUser", new User());
-        return "registration";
+        return "/user/registration";
     }
 
     @PostMapping("/registration")
     public String registration(@ModelAttribute("newUser") User user, Model model, BindingResult result){
         try {
             if (result.hasErrors()) {
-                return "registration";
+                return "/user/registration";
             }
 
             if (hibernateUserDao.existByEmail(user.getEmail())) {
-                model.addAttribute("message", "Email already exist");
-                return "registration";
+//                model.addAttribute("message", "Email already exist");
+                model.addAttribute("message", true);
+                return "/user/registration";
             } else {
                 user.setRoleUser(RoleUser.USER);
                 hibernateUserDao.save(user);
@@ -44,17 +45,17 @@ public class UserController {
         }catch (Exception e) {
             model.addAttribute("errorMessage", "Error: " + e.getMessage());
         }
-        return "registration";
+        return "/user/registration";
     }
 
     @GetMapping("/authorization")
     public String authorization(Model model){
         model.addAttribute("user", new User());
-        return "authorization";
+        return "/user/authorization";
     }
 
     @PostMapping("/authorization")
-    public String authorization(@ModelAttribute("user") User user, Model model, HttpSession httpSession){
+    public String authorization(@ModelAttribute("authUser") User user, Model model, HttpSession httpSession){
         User byUser = hibernateUserDao.findByEmail(user.getEmail());
         try {
             if(byUser != null){
@@ -62,16 +63,16 @@ public class UserController {
                     httpSession.setAttribute("user", byUser);
                     return "redirect:/";
                 }else {
-                    model.addAttribute("message","Password not equals");
+                    model.addAttribute("messagePassword","Password not equals");
                 }
             } else {
-                model.addAttribute("message","email is empty");
+                model.addAttribute("messageUser","email is empty");
             }
 
         }catch (Exception e) {
             model.addAttribute("errorMessage", "Error: " + e.getMessage());
         }
-        return "authorization";
+        return "/user/authorization";
     }
 
 }
