@@ -35,17 +35,25 @@
                         <div class="row">
                             <th:block th:each="product : ${productList}">
                                 <div class="col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1 pt-lg-4 pt-4">
-                                    <div class="card">
+                                    <div class="card" style="border-top-right-radius: 15px; border-top-left-radius: 15px;
+                                                                width: 288px;">
                                         <a th:href="@{/product/product(id=${product.id})}">
-                                            <img class="card-img-top" th:src="${product.urlImage}"/>
+                                            <img class="card-img-top" style="width: 289px; height: 270px;"
+                                                 th:src="${product.urlImage}"/>
                                         </a>
-                                        <div class="card-body">
-
-                                            <h6 class="font-weight-bold pt-1">
+                                        <div class="card-body" style="max-width: 287px;max-height: 280px;
+                                                                       min-width: 287px; min-height: 280px;
+                                                              ">
+                                            <h6 style="max-width: 257px; max-height: 62px;
+                                                       min-width: 257px; min-height: 62px">
                                                 <a th:href="@{/product/product(id=${product.id})}"
                                                    th:utext="${product.model}"></a>
                                             </h6>
-                                            <div class="text-muted description" th:utext="${product.description}">
+                                            <div class="text-muted description"
+                                                 style="max-width: 257px; max-height: 140px;
+                                                 min-width: 257px; min-height: 140px;"
+
+                                                 th:utext="${product.description}">
                                             </div>
                                             <div class="d-flex align-items-center product"><span
                                                     class="fas fa-star"></span>
@@ -62,7 +70,8 @@
                                                 <form action="#"
                                                       th:action="@{/basket/saveInBasket(id=${product.id})}"
                                                       method="get">
-                                                    <input type="submit" class="btn btn-primary" value="Buy now"/>
+                                                        <input type="submit" class="btn btn-primary"
+                                                               value="Buy now"/>
                                                 </form>
                                             </div>
                                         </div>

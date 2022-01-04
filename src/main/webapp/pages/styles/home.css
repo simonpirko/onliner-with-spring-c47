@@ -255,7 +255,7 @@ body {
 }
 
 .card-body {
-    padding: 0.5rem
+    padding: 0.5rem;
 }
 
 .card-body .description {
@@ -280,8 +280,8 @@ h6 {
     background-color: #48b83e;
     color: #fff;
     border: 1px solid #008000;
-    border-radius: 10px;
-    font-weight: 800
+    border-radius: 15px;
+    font-weight: 800;
 }
 
 .btn.btn-primary:hover {
