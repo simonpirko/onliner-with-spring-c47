@@ -8,13 +8,14 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 
 
-//@Data
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@EqualsAndHashCode
-//@Entity
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@Entity
 @Deprecated
-public class Laptop {
+public class Laptop extends Product {
 
 
     private String type;

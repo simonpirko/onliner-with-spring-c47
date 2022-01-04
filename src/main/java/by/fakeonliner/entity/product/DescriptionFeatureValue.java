@@ -1,5 +1,6 @@
 package by.fakeonliner.entity.product;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

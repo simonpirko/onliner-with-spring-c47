@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 
+
 //@Data
 //@NoArgsConstructor
 //@AllArgsConstructor
@@ -14,6 +15,7 @@ import javax.persistence.Entity;
 //@Entity
 @Deprecated
 public class Mobile{
+
 
     private String mobileType;
 
