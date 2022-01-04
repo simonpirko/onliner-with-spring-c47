@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface CategoryDao {
 
+
     void save(Category category);
 
     void saveDescriptionFeature(DescriptionFeature descriptionFeature);
