@@ -30,10 +30,12 @@ public class HomeController {
 
     @GetMapping
     public String index(Model model) {
-        List<Category> categoryList = categoryService.getCategory();
-List<Product> productList = productService.getAllProducts();
+        List<Category> category = categoryService.getCategory();
+        List<Product> productList = productService.getAllProducts();
+        Category category1 = new Category();
         model.addAttribute("user", new User());
-        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("categoryList", category);
+        model.addAttribute("category", category1);
         model.addAttribute("productList", productList);
         model.addAttribute("descFeature", new DescriptionFeature());
         model.addAttribute("descFeatureVal", new DescriptionFeatureValue());
