@@ -50,7 +50,7 @@ public class UserController {
 
     @GetMapping("/authorization")
     public String authorization(Model model){
-        model.addAttribute("user", new User());
+        model.addAttribute("authUser", new User());
         return "/user/authorization";
     }
 
@@ -60,13 +60,13 @@ public class UserController {
         try {
             if(byUser != null){
                 if (byUser.getPassword().equals(user.getPassword())){
-                    httpSession.setAttribute("user", byUser);
+                    httpSession.setAttribute("authUser", byUser);
                     return "redirect:/";
                 }else {
-                    model.addAttribute("messagePassword","Password not equals");
+                    model.addAttribute("messagePassword",true);
                 }
             } else {
-                model.addAttribute("messageUser","email is empty");
+                model.addAttribute("messageUser",true);
             }
 
         }catch (Exception e) {
