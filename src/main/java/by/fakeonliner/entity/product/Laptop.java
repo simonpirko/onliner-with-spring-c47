@@ -13,9 +13,9 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@Entity
+//@Entity
 @Deprecated
-public class Laptop extends Product {
+public class Laptop {
 
 
     private String type;
