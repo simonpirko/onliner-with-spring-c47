@@ -30,17 +30,19 @@ public class ProductController {
 
     @PostMapping("/category")
     public String category(Model model) {
-
         return "product/category";
     }
 
-    @GetMapping("/personal")
-    public String personal(Model model, long id) {
+    @GetMapping("/product")
+    public String product(Model model, long id) {
+        Product product = productService.getById(id);
+        model.addAttribute("product", product);
         return "product/product";
     }
 
-    @PostMapping("/personal")
-    public String personal(Model model) {
-       return "product/product";
+    @PostMapping("/product")
+    public String product() {
+
+        return "product/product";
     }
 }

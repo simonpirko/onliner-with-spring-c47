@@ -17,7 +17,7 @@
                     class="ps-3">Categories</span></span> <span class="fas fa-chevron-down"></span> </a></p>
             <div class="collapse show border" id="collapseExample" style="border-radius: 7px">
                 <ul class="list-unstyled">
-                    <th:block th:each="category : ${categories}">
+                    <th:block th:each="category : ${categoryList}">
                         <li>
                             <a class="dropdown-item" th:href="@{/product/category(id=${category.id})}">
                                 <h4 th:text="${category.name}">
@@ -33,7 +33,7 @@
                 <section id="products">
                     <div class="container py-3">
                         <div class="row">
-                            <th:block th:each="product : ${products}">
+                            <th:block th:each="product : ${productList}">
                                 <div class="col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1 pt-lg-4 pt-4">
                                     <div class="card">
                                         <a th:href="@{/product/personal(id=${product.id})}">
