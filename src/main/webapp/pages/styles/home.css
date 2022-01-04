@@ -1,0 +1,296 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif
+}
+
+.navbar .navbar-nav .nav-item .active {
+    color: #67971f
+}
+
+a.fas {
+    position: relative;
+    font-size: 20px;
+    text-decoration: none;
+    color: black
+}
+
+.num {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: -8px;
+    left: 18px;
+    width: 15px;
+    height: 15px;
+    font-size: 8px;
+    background-color: #67971f;
+    color: white
+}
+
+.col-lg-3 .btn.btn-primary {
+    width: 100%;
+    height: 43px;
+    box-shadow: none;
+    outline: none;
+    background-color: #67971f;
+    color: white;
+    font-weight: 800;
+    padding: 0px 15px;
+    line-height: 22px;
+    border: none
+}
+
+.col-lg-3 .btn.btn-primary:focus {
+    outline: none;
+    box-shadow: none
+}
+
+.col-lg-3 .btn.btn-primary:hover {
+    background-color: #aadf5a
+}
+
+.col-lg-3 ul {
+    width: 100%
+}
+
+.col-lg-9 .btn.btn-secondary {
+    width: 100%;
+    height: 100% !important;
+    box-shadow: none;
+    outline: none;
+    background-color: transparent;
+    color: black;
+    font-weight: 800;
+    padding: 0px 15px;
+    line-height: 22px;
+    border: none
+}
+
+.col-lg-9 .btn.btn-primary {
+    background-color: #67971f;
+    border: none;
+    height: 100%;
+    width: 100px
+}
+
+.col-lg-9 .btn.btn-primary:hover {
+    background-color: #aadf5a
+}
+
+.col-lg-9 ul {
+    width: 100%
+}
+
+.fas.fa-phone {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #67971f
+}
+
+.p-green {
+    letter-spacing: 2px;
+    color: #67971f;
+    font-size: 14px
+}
+
+input {
+    width: 230px;
+    border: none;
+    outline: none
+}
+
+p {
+    margin: 0%
+}
+
+.text-muted {
+    font-size: 14px
+}
+
+.btn.btn-success {
+    color: white;
+    background-color: #67971f;
+    outline: none;
+    border: none
+}
+
+.btn.btn-success:hover {
+    background-color: #aadf5a
+}
+
+@media(max-width:1022px) {
+    input {
+        width: 100%;
+        border: none
+    }
+}
+
+body {
+    background-color: aliceblue;
+}
+
+.bg-black {
+    background-color: #000
+}
+
+#logo {
+    width: 30px;
+    height: 30px;
+    border-radius: 4px
+}
+
+.navbar-brand {
+    padding: 14px 20px;
+    font-size: 16px
+}
+
+.navbar-nav {
+    width: 100%
+}
+
+.nav-item {
+    padding: 6px 14px;
+    text-align: center
+}
+
+.nav-link {
+    padding-bottom: 10px
+}
+
+.v-line {
+    background-color: gray;
+    width: 1px;
+    height: 20px
+}
+
+.navbar-collapse.collapse.in {
+    display: block !important
+}
+
+@media (max-width: 576px) {
+    .nav-item {
+        width: 100%;
+        text-align: left
+    }
+
+    .v-line {
+        display: none
+    }
+}
+
+
+
+
+/**/
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+.list-group-item {
+    border: none;
+    padding: 0.3rem 0.4rem 0.3rem 0rem
+}
+
+.badge-primary {
+    background-color: #defadb;
+    color: #48b83e
+}
+
+.brand .check {
+    background-color: #fff;
+    top: 3px;
+    border: 1px solid #666
+}
+
+.brand .tick {
+    font-size: 1rem;
+    padding-left: 25px
+}
+
+.rating .check {
+    background-color: #fff;
+    border: 1px solid #666;
+    top: 0
+}
+
+.rating .tick {
+    font-size: 0.9rem;
+    padding-left: 25px
+}
+
+.rating .fas.fa-star {
+    color: #ffbb00;
+    padding: 0px 3px
+}
+
+.brand .tick:hover input~.check,
+.rating .tick:hover input~.check {
+    background-color: #f9f9f9
+}
+
+.brand .tick input:checked~.check,
+.rating .tick input:checked~.check {
+    background-color: #61b15a
+}
+
+#products {
+    width: 100%;
+    margin: 0;
+    float: left;
+}
+
+.card:hover {
+    transform: scale(1.1);
+    transition: all 0.5s ease-in-out;
+    cursor: pointer
+}
+
+.card-body {
+    padding: 0.5rem
+}
+
+.card-body .description {
+    font-size: 0.78rem;
+    padding-bottom: 8px
+}
+
+div.h6,
+h6 {
+    margin: 0
+}
+
+.product .fa-star {
+    font-size: 0.9rem
+}
+
+.rebate {
+    font-size: 0.9rem
+}
+
+.btn.btn-primary {
+    background-color: #48b83e;
+    color: #fff;
+    border: 1px solid #008000;
+    border-radius: 10px;
+    font-weight: 800
+}
+
+.btn.btn-primary:hover {
+    background-color: #48b83ee8
+}
+
+img {
+    width: 192px;
+    height: 132px;
+    object-fit: contain
+}
+
