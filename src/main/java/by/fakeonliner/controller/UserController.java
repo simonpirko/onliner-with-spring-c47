@@ -36,13 +36,13 @@ public class UserController {
             }
 
             if (hibernateUserDao.existByEmail(user.getEmail())) {
-//                model.addAttribute("message", "Email already exist");
-                model.addAttribute("message", true);
-                return "/user/registration";
-            } else {
                 user.setRoleUser(RoleUser.USER);
                 hibernateUserDao.save(user);
                 return "redirect:/user/authorization";
+            } else {
+//                model.addAttribute("message", "Email already exist");
+                model.addAttribute("message", true);
+                return "/user/registration";
             }
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Error: " + e.getMessage());
