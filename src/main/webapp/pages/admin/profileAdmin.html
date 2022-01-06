@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile admin</title>
+</head>
+<body>
+<div th:replace="_header :: content"></div>
+<div class="container">
+    <div class="row justify-content-center mt-4">
+        <div class="col-sm-4">
+            <form action="#" th:action="@{/admin/profileAdmin}" th:object="${admin}" th:method="post">
+                <div class="row justify-content-center">
+                    <div class="col-sm-5">
+                        <button type="submit" class="btn btn-primary" th:action="/admin/addproduct">Add product</button>
+                    </div>
+                    <div class="col-sm-5">
+                        <button type="submit" class="btn btn-primary" th:action="/admin/deleteproduct">Deleted product</button>
+                    </div>
+                    <div class="col-sm-5">
+                        <button type="submit" class="btn btn-primary" th:action="/admin/editproduct">Edit product</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
