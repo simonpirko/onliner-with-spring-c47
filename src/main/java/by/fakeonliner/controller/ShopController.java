@@ -1,5 +1,6 @@
 package by.fakeonliner.controller;
 
+import by.fakeonliner.dto.shop.UpdateShopDto;
 import by.fakeonliner.entity.shop.Shop;
 import by.fakeonliner.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,26 +90,27 @@ public class ShopController {
 
     @GetMapping("/profileUpdate")
     public String profileUpdate(Model model, HttpSession session) {
-        Shop shop = (Shop) session.getAttribute("shop");
-//        Shop shop = new Shop("sanek@gmail.com", "123", "name", "+375336495525", "address", "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription");
-        model.addAttribute("shop", shop);
+        UpdateShopDto updateShopDto = (UpdateShopDto) session.getAttribute("shop");
+        model.addAttribute("updateShop", updateShopDto);
         return "shop/update";
     }
 
     @PostMapping("/profileUpdate")
-    public String profileUpdate(@Valid @ModelAttribute("shop") Shop shop, BindingResult bindingResult,
+    public String profileUpdate(@Valid @ModelAttribute("shop") UpdateShopDto updateShopDto, BindingResult bindingResult,
                                 Model model, HttpSession session) {
         try {
             if (!bindingResult.hasErrors()) {
+                Shop shop = getShopFromDto(updateShopDto);
                 shopService.edit(shop);
-                session.setAttribute("shop", shop);
+                Shop shopDb = shopService.getShopByEmail(shop.getEmail());
+                session.setAttribute("shop", shopDb);
                 model.addAttribute("messageComplete", true);
             }
-            return "shop/profileUpdate";
+            return "shop/update";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Error: " + e.getMessage());
         }
-        return "shop/profileUpdate";
+        return "shop/update";
     }
 
     @GetMapping("/storeBase")
@@ -123,5 +125,17 @@ public class ShopController {
     public String logout(HttpSession httpSession) {
         httpSession.invalidate();
         return "redirect:/";
+    }
+
+
+    private Shop getShopFromDto(UpdateShopDto updateShopDto) {
+        Shop shop = new Shop();
+        shop.setName(updateShopDto.getName());
+        shop.setEmail(updateShopDto.getEmail());
+        shop.setPhoneNumber(updateShopDto.getPhoneNumber());
+        shop.setContactAddress(updateShopDto.getContactAddress());
+        shop.setPassword(updateShopDto.getPassword());
+        shop.setDescription(updateShopDto.getDescription());
+        return shop;
     }
 }
