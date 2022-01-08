@@ -1,5 +1,6 @@
 package by.fakeonliner.controller;
 
+import by.fakeonliner.entity.product.Category;
 import by.fakeonliner.entity.product.Product;
 import by.fakeonliner.service.CategoryService;
 import by.fakeonliner.service.ProductService;

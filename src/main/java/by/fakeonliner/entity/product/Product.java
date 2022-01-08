@@ -36,6 +36,9 @@ public class Product {
 
     private long categoryId;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "product_descriptionfeaturevalue",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "descriptionfeaturevalues_id"))
     private List<DescriptionFeatureValue> descriptionFeatureValues;
 }

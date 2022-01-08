@@ -37,16 +37,16 @@
                         </thead>
                         <tbody>
                         <tr>
+                            <td>Бренд</td>
+                            <td th:text="${product.brand}"></td>
+                        </tr>
+                        <tr>
                             <td>Дата выхода на рынок</td>
-                            <td>2021 г.</td>
+                            <td th:text="${product.marketLaunchDate}"></td>
                         </tr>
-                        <tr>
-                            <td>Продуктовая линейка</td>
-                            <td>Honor MagicBook</td>
-                        </tr>
-                        <tr>
-                            <td>Тип</td>
-                            <td>ультрабук</td>
+                        <tr th:each="description:${product.descriptionFeatureValues}">
+                            <td th:text="${description.descriptionFeature.name}"></td>
+                            <td th:text="${description.name}"></td>
                         </tr>
                         </tbody>
                     </table>
