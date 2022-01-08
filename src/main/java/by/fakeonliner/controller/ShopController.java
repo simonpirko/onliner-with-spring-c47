@@ -1,7 +1,7 @@
 package by.fakeonliner.controller;
 
-import by.fakeonliner.dao.hibernate.HibernateShopDao;
 import by.fakeonliner.entity.shop.Shop;
+import by.fakeonliner.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +16,11 @@ import javax.validation.Valid;
 public class ShopController {
 
 
-    private final HibernateShopDao hibernateShopDao;
+    private final ShopService shopService;
 
     @Autowired
-    public ShopController(HibernateShopDao hibernateShopDao) {
-        this.hibernateShopDao = hibernateShopDao;
+    public ShopController(ShopService shopService) {
+        this.shopService = shopService;
     }
 
     @GetMapping("/registration")
@@ -36,11 +36,11 @@ public class ShopController {
                 return "registration";
             }
 
-            if (hibernateShopDao.existByEmail(shop.getEmail())) {
+            if (shopService.existByEmail(shop.getEmail())) {
                 model.addAttribute("message", "Email already exist");
                 return "registration";
             } else {
-                hibernateShopDao.save(shop);
+                shopService.save(shop);
                 return "redirect:/shop/authorization";
             }
 
@@ -60,7 +60,7 @@ public class ShopController {
 
     @PostMapping("/authorization")
     public String authorization(@ModelAttribute("shop") Shop shop, Model model, HttpSession httpSession) {
-        Shop byEmail = hibernateShopDao.getShopByEmail(shop.getEmail());
+        Shop byEmail = shopService.getShopByEmail(shop.getEmail());
         try {
             if (byEmail != null) {
                 if (byEmail.getPassword().equals(shop.getPassword())) {
@@ -82,41 +82,38 @@ public class ShopController {
 
     @GetMapping("/profile")
     public String profile(@RequestParam("shopId") long id, Model model) {
-        Shop shop = hibernateShopDao.findById(id);
+        Shop shop = shopService.findById(id);
         model.addAttribute("shop", shop);
-        return "profile";
+        return "shop/profile";
     }
 
-//    @PostMapping("/profile")
-//    public String profile(){
-//
-//    }
-
     @GetMapping("/profileUpdate")
-    public String profileUpdate(@RequestParam("shopId") long id, Model model) {
-        Shop shop = hibernateShopDao.findById(id);
+    public String profileUpdate(Model model, HttpSession session) {
+        Shop shop = (Shop) session.getAttribute("shop");
+//        Shop shop = new Shop("sanek@gmail.com", "123", "name", "+375336495525", "address", "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription");
         model.addAttribute("shop", shop);
-        return "update";
+        return "shop/update";
     }
 
     @PostMapping("/profileUpdate")
-    public String profileUpdate(@Valid @ModelAttribute("shop") Shop shop, BindingResult bindingResult, Model model) {
+    public String profileUpdate(@Valid @ModelAttribute("shop") Shop shop, BindingResult bindingResult,
+                                Model model, HttpSession session) {
         try {
-            if (bindingResult.hasErrors()) {
-                return "update";
+            if (!bindingResult.hasErrors()) {
+                shopService.edit(shop);
+                session.setAttribute("shop", shop);
+                model.addAttribute("messageComplete", true);
             }
-            hibernateShopDao.edit(shop);
-            model.addAttribute("message", "Shop data has been update");
-            return "redirect:/shop/profile";
+            return "shop/profileUpdate";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Error: " + e.getMessage());
         }
-        return "redirect:/shop/profile";
+        return "shop/profileUpdate";
     }
 
     @GetMapping("/storeBase")
     public String storeProductDatabaseManagement(@RequestParam("shopId") long id, Model model) {
-        Shop shop = hibernateShopDao.findById(id);
+        Shop shop = shopService.findById(id);
         model.addAttribute("shop", shop);
         return "storeBase";
     }
