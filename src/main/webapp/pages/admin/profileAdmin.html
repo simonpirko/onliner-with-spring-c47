@@ -9,16 +9,22 @@
 <div class="container">
     <div class="row justify-content-center mt-4">
         <div class="col-sm-4">
-            <form action="#" th:action="@{/admin/profileAdmin}" th:object="${admin}" th:method="post">
-                <div class="row justify-content-center">
-                    <div class="col-sm-5">
-                        <button type="submit" class="btn btn-primary" th:action="/admin/addproduct">Add product</button>
+            <form th:action="@{/admin/profileAdmin}" th:object="${adminProf}">
+                <div class="row justify-content-center m-3">
+                    <div class="col-sm-8">
+                        <button type="submit" class="btn btn-primary" th:href="@{/admin/addproduct}">Add product</button>
                     </div>
-                    <div class="col-sm-5">
-                        <button type="submit" class="btn btn-primary" th:action="/admin/deleteproduct">Deleted product</button>
+                </div>
+
+                <div class="row justify-content-center m-3">
+                    <div class="col-sm-8">
+                        <button type="submit" class="btn btn-primary" th:href="@{/admin/deleteproduct}">Deleted product</button>
                     </div>
-                    <div class="col-sm-5">
-                        <button type="submit" class="btn btn-primary" th:action="/admin/editproduct">Edit product</button>
+                </div>
+
+                <div class="row justify-content-center m-3">
+                    <div class="col-sm-8">
+                        <button type="submit" class="btn btn-primary" th:href="@{/admin/editproduct}">Edit product</button>
                     </div>
                 </div>
             </form>
