@@ -2,6 +2,7 @@ package by.fakeonliner.dao.hibernate;
 
 import by.fakeonliner.dao.ProductDao;
 import by.fakeonliner.entity.product.Product;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,6 @@ public class HibernateProductDao implements ProductDao {
         try (Session session = sessionFactory.openSession()) {
             session.save(product);
         } catch (NoResultException e) {
-            return;
         }
     }
 
@@ -48,7 +48,7 @@ public class HibernateProductDao implements ProductDao {
     }
 
     @Override
-    public List<Product> findByCategoryId(long categoryId) {
+    public List findByCategoryId(long categoryId) {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from Product p where p.categoryId = :ci")
                     .setParameter("ci", categoryId)
@@ -60,7 +60,7 @@ public class HibernateProductDao implements ProductDao {
     }
 
     @Override
-    public List<Product> findByPrice(double min, double max, long categoryId) {
+    public List findByPrice(double min, double max, long categoryId) {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from Product p where p.price > :min and price < :max and p.categoryId = :categoryId")
                     .setParameter("min", min)
@@ -77,7 +77,6 @@ public class HibernateProductDao implements ProductDao {
         try (Session session = sessionFactory.openSession()) {
             session.saveOrUpdate(product);
         } catch (NoResultException e) {
-            return;
         }
     }
 
@@ -87,7 +86,6 @@ public class HibernateProductDao implements ProductDao {
             Product product = session.find(Product.class, id);
             session.delete(product);
         } catch (NoResultException e) {
-            return;
         }
 
     }
@@ -95,7 +93,9 @@ public class HibernateProductDao implements ProductDao {
     @Override
     public Product findById(long id) {
         try (Session session = sessionFactory.openSession()) {
-            return session.find(Product.class, id);
+            Product product = session.find(Product.class, id);
+            Hibernate.initialize(product.getDescriptionFeatureValues()); //Для получения ленивого объекта вне транзакции
+            return product;
         } catch (NoResultException e) {
             return null;
         }
@@ -103,7 +103,7 @@ public class HibernateProductDao implements ProductDao {
 
     @Override
     public List getAllProducts() {
-        try(Session session = sessionFactory.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from Product").list();
         }
     }
