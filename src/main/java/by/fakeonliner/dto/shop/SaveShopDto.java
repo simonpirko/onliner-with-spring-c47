@@ -1,33 +1,30 @@
-package by.fakeonliner.entity.shop;
+package by.fakeonliner.dto.shop;
 
 import by.fakeonliner.entity.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
-@Data
+@Component
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
-@Entity
-public class Shop {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
+@Data
+public class SaveShopDto {
     @NotBlank(message = "Empty field")
     @Length(max = 255, min = 11, message = "Entered data has the wrong length")
     private String email;
 
     @NotBlank(message = "Empty field")
-    @Length(max = 255, min = 5, message = "Entered data has the wrong length")
+    @Length(max = 255, min = 5, message = "Entered data has the wrong length(min = 5)")
     private String password;
 
     @NotBlank(message = "Empty field")
@@ -42,22 +39,16 @@ public class Shop {
     @Length(max = 255, message = "Entered data has the wrong length")
     private String contactAddress;
 
+    @NotBlank(message = "Empty field")
     @Length(max = 255, message = "Entered data has the wrong length")
     private String description;
 
+    @Column(columnDefinition = "double default 0")
     private double amountOfMarks;
 
+    @Column(columnDefinition = "int default 0")
     private int numberOfMarks;
 
     @OneToMany
     private List<Product> products;
-
-    public Shop(String email, String password, String name, String phoneNumber, String contactAddress, String description) {
-        this.email = email;
-        this.password = password;
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.contactAddress = contactAddress;
-        this.description = description;
-    }
 }

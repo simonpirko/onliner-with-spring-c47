@@ -29,10 +29,11 @@ public class HibernateShopDao implements ShopDao {
 
     @Override
     public boolean existByEmail(String email) {
-        try (Session session = sessionFactory.getCurrentSession()) {
-            boolean exist = session.createQuery("select count(*) from Shop where email= :email")
-                    .setParameter("email", email).list().isEmpty();
-            return exist;
+        try (Session session = sessionFactory.openSession()) {
+            boolean exist = session.createQuery("from Shop where email= :email")
+                    .setParameter("email", email)
+                    .list().isEmpty();
+            return !exist;
         } catch (NoResultException e) {
             return false;
         }
@@ -40,7 +41,7 @@ public class HibernateShopDao implements ShopDao {
 
     @Override
     public Shop getShopByEmail(String email) {
-        try (Session session = sessionFactory.getCurrentSession()) {
+        try (Session session = sessionFactory.openSession()) {
             return (Shop) session.createQuery("from Shop where email= :email")
                     .setParameter("email", email)
                     .getSingleResult();
@@ -51,7 +52,7 @@ public class HibernateShopDao implements ShopDao {
 
     @Override
     public List<Shop> getShopList() {
-        try (Session session = sessionFactory.getCurrentSession()) {
+        try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from Shop", Shop.class)
                     .getResultList();
         } catch (NoResultException e) {
@@ -61,7 +62,7 @@ public class HibernateShopDao implements ShopDao {
 
     @Override
     public void edit(Shop shop) {
-        try (Session session = sessionFactory.getCurrentSession()) {
+        try (Session session = sessionFactory.openSession()) {
             session.update(shop);
         } catch (NoResultException e) {
             return;
@@ -70,7 +71,7 @@ public class HibernateShopDao implements ShopDao {
 
     @Override
     public void delete(Shop shop) {
-        try (Session session = sessionFactory.getCurrentSession()) {
+        try (Session session = sessionFactory.openSession()) {
             session.delete(shop);
         } catch (NoResultException e) {
             return;

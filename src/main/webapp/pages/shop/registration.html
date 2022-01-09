@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop registration</title>
+    <link rel="stylesheet" th:href="@{/pages/styles/shopRegistration.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+</head>
+<body>
+<div th:replace="_header :: content"></div>
+<div class="container mt-5">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-7">
+            <div class="card px-5 py-4" id="form1">
+                <div class="form-data" v-if="!submitted">
+                    <div class="text-center mb-4">
+                        <h4>Shop Registration</h4>
+                    </div>
+                    <p th:if="${message != null}" class="alert alert-info alert-danger"  th:utext="${message}" th:type="text"></p>
+                    <form action="#" th:action="@{/shop/registration}" th:object="${shop}" th:method="post">
+                        <div class="forms-inputs mb-4"><span>Email</span>
+                            <input class="form-control" th:field="*{email}" type="email">
+                        </div>
+                        <div class="form-text">
+                            <p th:if="${#fields.hasErrors('email')}" style="color: red" th:errors="*{email}"></p>
+                        </div>
+                        <div class="forms-inputs mb-4"><span>Name</span>
+                            <input class="form-control" th:field="*{name}" type="text">
+                        </div>
+                        <div class="form-text">
+                            <p th:if="${#fields.hasErrors('name')}" style="color: red" th:errors="*{name}"></p>
+                        </div>
+                        <div class="forms-inputs mb-4"><span>Phone number</span>
+                            <input class="form-control" th:field="*{phoneNumber}" type="text">
+                        </div>
+                        <div class="form-text">
+                            <p th:if="${#fields.hasErrors('phoneNumber')}" style="color: red"
+                               th:errors="*{phoneNumber}"></p>
+                        </div>
+                        <div class="forms-inputs mb-4"><span>Contact address</span>
+                            <input class="form-control" th:field="*{contactAddress}" type="text">
+                        </div>
+                        <div class="form-text">
+                            <p th:if="${#fields.hasErrors('contactAddress')}" style="color: red"
+                               th:errors="*{contactAddress}"></p>
+                        </div>
+                        <div class="forms-inputs mb-4"><span>Password</span>
+                            <input class="form-control" th:field="*{password}" th:type="password">
+                        </div>
+                        <div class="form-text">
+                            <p th:if="${#fields.hasErrors('password')}" style="color: red"
+                               th:errors="*{password}"></p>
+                        </div>
+                        <div class="forms-inputs mb-4"><span>Description</span>
+                            <input class="form-control" th:field="*{description}" type="text">
+                        </div>
+                        <div class="form-text">
+                            <p th:if="${#fields.hasErrors('description')}" style="color: red"
+                               th:errors="*{description}"></p>
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary" style="text-align: center; width: 100%">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Authorization</title>
+    <link rel="stylesheet" th:href="@{/pages/styles/shopAuthorization.css}">
+<body>
+<div th:replace="_header :: content"></div>
+<div class="container">
+    <div class="row justify-content-center mt-4">
+        <div class="col-sm-4">
+            <div class="text-center mb-4">
+                <h3>Shop Authorization</h3>
+            </div>
+            <form action="#" th:action="@{/shop/authorization}" th:object="${shop}" th:method="post">
+                <div class="forms-inputs mb-4"><span>Email</span>
+                    <input class="form-control" th:field="*{email}" type="email">
+                </div>
+                <div class="form-text">
+                    <p th:if="${#fields.hasErrors('email')}" style="color: red" th:errors="*{email}"></p>
+                </div>
+                <div class="forms-inputs mb-4"><span>Password</span>
+                    <input class="form-control" th:field="*{password}" type="password">
+                </div>
+                <div class="form-text">
+                    <p th:if="${#fields.hasErrors('password')}" style="color: red" th:errors="*{password}"></p>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-sm-5">
+                        <button type="submit" class="btn btn-primary" style="margin-left: 35px">Sing in</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-sm-3 ms-4 mt-3">
+            <p>You don't have an account yet? <a th:href="@{/shop/registration}">Create account</a></p>
+        </div>
+    </div>
+    <p th:if="${message != null}" class="alert alert-info alert-danger" style="margin: auto;width: 300px; text-align:center"  th:utext="${message}" th:type="text"></p>
+</div>
+
+</body>
+</html>

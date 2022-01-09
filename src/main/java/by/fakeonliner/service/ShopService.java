@@ -15,20 +15,24 @@ public class ShopService {
     @Autowired
     private ShopDao shopDao;
 
-    public boolean save(Shop shop) {
-        if (shopDao.existByEmail(shop.getEmail())) {
-            return false;
-        } else {
-            shopDao.save(shop);
-            return true;
-        }
+    public void save(Shop shop) {
+        shopDao.save(shop);
     }
 
-    public Shop findByEmail(String email) {
-        if (shopDao.existByEmail(email)) {
-            return shopDao.getShopByEmail(email);
-        }
-        return null;
+    public void edit(Shop shop) {
+        shopDao.edit(shop);
+    }
+
+    public Shop findById(long id) {
+        return shopDao.findById(id);
+    }
+
+    public Shop getShopByEmail(String email) {
+        return shopDao.getShopByEmail(email);
+    }
+
+    public boolean existByEmail(String email) {
+        return shopDao.existByEmail(email);
     }
 
     public List<Shop> getShopList() {

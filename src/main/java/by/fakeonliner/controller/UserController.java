@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public String registration(@ModelAttribute("newUser") User user, Model model, BindingResult result) {
+    public String registration(@ModelAttribute("newUser") User user, BindingResult result, Model model) {
         try {
             if (result.hasErrors()) {
                 return "/user/registration";
