@@ -12,19 +12,19 @@
             <form th:action="@{/admin/profileAdmin}" th:object="${adminProf}">
                 <div class="row justify-content-center m-3">
                     <div class="col-sm-8">
-                        <button type="submit" class="btn btn-primary" th:href="@{/admin/addproduct}">Add product</button>
+                        <button type="submit" class="btn btn-primary" th:href="@{/admin/addProduct}">Add product</button>
                     </div>
                 </div>
 
                 <div class="row justify-content-center m-3">
                     <div class="col-sm-8">
-                        <button type="submit" class="btn btn-primary" th:href="@{/admin/deleteproduct}">Deleted product</button>
+                        <button type="submit" class="btn btn-primary"><a href="/admin/deleteProduct"> Deleted product </a> </button>
                     </div>
                 </div>
 
                 <div class="row justify-content-center m-3">
                     <div class="col-sm-8">
-                        <button type="submit" class="btn btn-primary" th:href="@{/admin/editproduct}">Edit product</button>
+                        <button type="submit" class="btn btn-primary" th:href="@{/admin/editProduct}">Edit product</button>
                     </div>
                 </div>
             </form>

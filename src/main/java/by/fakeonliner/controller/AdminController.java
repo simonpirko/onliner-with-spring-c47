@@ -108,22 +108,22 @@ public class AdminController {
         List<Product> productList = productService.getAllProducts();
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("productList", productList);
-        return "/admin/deleteproduct";
+        return "/admin/deleteProduct";
     }
 
     @PostMapping("/deleteProduct")
     public String deletedProduct(@Valid @ModelAttribute("shop") Product product, BindingResult bindingResult, Model model){
         try {
             if (bindingResult.hasErrors()) {
-                return "/admin/deleteproduct";
+                return "/admin/deleteProduct";
             }
             hibernateProductDao.delete(product.getId());
-            return "redirect:/admin/profile";
+            return "redirect:/admin/profileAdmin";
 
         }catch (Exception e) {
             model.addAttribute("errorMessage", "Error: " + e.getMessage());
         }
-        return "/admin/deleteproduct";
+        return "/admin/deleteProduct";
     }
 
     @GetMapping("/editProduct")

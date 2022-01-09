@@ -7,6 +7,7 @@
 </head>
 <body>
 <div th:replace="_header :: content"></div>
+<form th:action="@{admin/deleteproduct}">
 <div class="container">
     <div class="row">
         <div class="col-3 mb-2" style="margin-top: 40px">
@@ -84,5 +85,6 @@
         </div>
     </div>
 </div>
+</form>
 </body>
 </html>
