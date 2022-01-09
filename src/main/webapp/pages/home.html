@@ -18,11 +18,12 @@
     </div>
     <div class="row mt-3">
         <div class="col-sm-3 mb-2">
-
             <ul class="list-group" th:each="category,iter:${session.categoryList}">
-                <li class="list-group-item d-flex justify-content-between align-items-center" >
-                    <span th:text="${category.name}"></span>
-<!--                    <span class="badge bg-primary rounded-pill" th:text="${productList.size(category.id)}">14</span>-->
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a class="dropdown-item" th:href="@{/product/category(id=${category.id})}">
+                        <span th:text="${category.name}"></span>
+                    </a>
+                    <!--                    <span class="badge bg-primary rounded-pill" th:text="${productList.size(category.id)}">14</span>-->
                 </li>
             </ul>
         </div>
