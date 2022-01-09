@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" th:field="*{password}" placeholder="Password"
+                    <input type="password" class="form-control" th:field="*{password}" placeholder="Password"
                            aria-describedby="passwordHelp" required/>
                     <div id="passwordHelp" class="form-text">
                         <p th:if="${messagePassword == true}" style="color:red">Password not equals</p>

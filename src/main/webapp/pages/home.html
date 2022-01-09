@@ -4,86 +4,70 @@
     <meta charset="UTF-8">
     <title>Home</title>
     <link rel="stylesheet" th:href="@{/pages/styles/home.css}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 </head>
 <body>
 <div th:replace="_header :: content"></div>
 <div class="container">
-    <div class="row">
-        <div class="col-3 mb-2" style="margin-top: 40px">
+    <div class="row mt-2">
+        <!--        <nav style="&#45;&#45;bs-breadcrumb-divider: '>';" aria-label="breadcrumb">-->
+        <!--            <ol class="breadcrumb">-->
+        <!--                <li class="breadcrumb-item"><a href="#">Home</a></li>-->
+        <!--                <li class="breadcrumb-item active" aria-current="page">Library</li>-->
+        <!--            </ol>-->
+        <!--        </nav>-->
+    </div>
+    <div class="row mt-3">
+        <div class="col-sm-3 mb-2">
             <p><a class="btn btn-primary w-100 d-flex align-items-center justify-content-between"
                   data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true"
                   aria-controls="collapseExample"> <span class="fas fa-bars"><span
                     class="ps-3">Categories</span></span> <span class="fas fa-chevron-down"></span> </a></p>
-            <div class="collapse show border" id="collapseExample" style="border-radius: 7px">
-                <ul class="list-unstyled">
-                    <th:block th:each="category : ${categoryList}">
-                        <li>
-                            <a class="dropdown-item" th:href="@{/product/category(id=${category.id})}">
-                                <h4 th:text="${category.name}">
-                                </h4>
-                            </a>
-                        </li>
-                    </th:block>
-                </ul>
-            </div>
+            <ul class="list-group" th:each="category,iter:${session.categoryList}">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a class="dropdown-item" th:href="@{/product/category(id=${category.id})}">
+                        <span th:text="${category.name}"></span>
+                    </a>
+                    <!--                    <span class="badge bg-primary rounded-pill" th:text="${productList.size(category.id)}">14</span>-->
+                </li>
+            </ul>
         </div>
-        <div class="col-9 mb-2">
-            <div class="wrapper">
-                <section id="products">
-                    <div class="container py-3">
-                        <div class="row">
-                            <th:block th:each="product : ${productList}">
-                                <div class="col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1 pt-lg-4 pt-4">
-                                    <div class="card" style="border-top-right-radius: 15px; border-top-left-radius: 15px;
-                                                                width: 288px;">
-                                        <a th:href="@{/product/product(id=${product.id})}">
-                                            <img class="card-img-top" style="width: 289px; height: 270px;"
-                                                 th:src="${product.urlImage}"/>
-                                        </a>
-                                        <div class="card-body" style="max-width: 287px;max-height: 280px;
-                                                                       min-width: 287px; min-height: 280px;
-                                                              ">
-                                            <h6 style="max-width: 257px; max-height: 62px;
-                                                       min-width: 257px; min-height: 62px">
-                                                <a th:href="@{/product/product(id=${product.id})}"
-                                                   th:utext="${product.model}"></a>
-                                            </h6>
-                                            <div class="text-muted description"
-                                                 style="max-width: 257px; max-height: 140px;
-                                                 min-width: 257px; min-height: 140px;"
-
-                                                 th:utext="${product.description}">
-                                            </div>
-                                            <div class="d-flex align-items-center product"><span
-                                                    class="fas fa-star"></span>
-                                                <span class="fas fa-star"></span> <span class="fas fa-star"></span>
-                                                <span
-                                                        class="fas fa-star"></span> <span
-                                                        class="far fa-star"></span>
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-between pt-3">
-                                                <div class="d-flex flex-column">
-                                                    <div class="text-muted rebate"
-                                                         th:utext="${product.price}"></div>
-                                                </div>
-                                                <form action="#"
-                                                      th:action="@{/basket/saveInBasket(id=${product.id})}"
-                                                      method="get">
-                                                        <input type="submit" class="btn btn-primary"
-                                                               value="Buy now"/>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
+        <div class="col-sm-9 mb-2">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col" th:each="product:${productList}">
+                    <div class="card h-100">
+                        <img th:src="${product.urlImage}" class="rounded mx-auto d-block mt-1" style="max-width: 50%"
+                             alt="...">
+                        <div class="card-body">
+                            <a th:href="@{/product/product(id=${product.id})}"><h6 class="card-title"
+                                                                                   th:text="${product.model}"></h6></a>
+                            <p class="card-text" th:text="${product.description}"></p>
+                        </div>
+                        <div class="row p-3">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex flex-column">
+                                    <span class="text-muted rebate" th:utext="${product.price}"></span>
                                 </div>
-                            </th:block>
+                                <form action="#"
+                                      th:action="@{/basket/saveInBasket(id=${product.id})}"
+                                      method="get">
+                                    <input type="submit" class="btn btn-primary"
+                                           value="Buy now"/>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </section>
+                </div>
             </div>
         </div>
     </div>
 </div>
 </body>
 </html>
+
+<div class="d-flex align-items-center product"><span
+        class="fas fa-star"></span>
+    <span class="fas fa-star"></span> <span class="fas fa-star"></span>
+    <span
+            class="fas fa-star"></span> <span
+            class="far fa-star"></span>
+</div>

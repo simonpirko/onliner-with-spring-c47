@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -29,11 +30,12 @@ public class HomeController {
     }
 
     @GetMapping
-    public String index(Model model) {
+    public String index(Model model, HttpSession httpSession) {
         List<Category> categoryList = categoryService.getCategory();
         List<Product> productList = productService.getAllProducts();
+        httpSession.setAttribute("categoryList", categoryList);
         model.addAttribute("user", new User());
-        model.addAttribute("categoryList", categoryList);
+//        model.addAttribute("categoryList", categoryList);
         model.addAttribute("productList", productList);
         model.addAttribute("descFeature", new DescriptionFeature());
         model.addAttribute("descFeatureVal", new DescriptionFeatureValue());
@@ -41,7 +43,7 @@ public class HomeController {
     }
 
     @PostMapping
-    public String index(Model model,User user,DescriptionFeature descriptionFeature,DescriptionFeatureValue descriptionFeatureValue){
+    public String index(Model model, User user, DescriptionFeature descriptionFeature, DescriptionFeatureValue descriptionFeatureValue) {
 
         return "redirect:/";
     }
