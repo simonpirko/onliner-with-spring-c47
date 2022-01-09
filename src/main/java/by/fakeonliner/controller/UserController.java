@@ -76,5 +76,11 @@ public class UserController {
         }
         return "/user/authorization";
     }
+    @GetMapping("/logout")
+    public String logout(HttpSession httpSession, Model model) {
+        httpSession.invalidate();
+        model.addAttribute("newUser", new User());
+        return "redirect:/";
+    }
 
 }
