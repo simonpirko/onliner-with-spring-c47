@@ -1,5 +1,7 @@
 package by.fakeonliner.controller;
 
+import by.fakeonliner.dto.shop.AuthorizationShopDto;
+import by.fakeonliner.dto.shop.SaveShopDto;
 import by.fakeonliner.dto.shop.UpdateShopDto;
 import by.fakeonliner.entity.shop.Shop;
 import by.fakeonliner.service.ShopService;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/shop")
@@ -26,59 +29,57 @@ public class ShopController {
 
     @GetMapping("/registration")
     public String registration(Model model) {
-        model.addAttribute("shop", new Shop());
-        return "registration";
+        model.addAttribute("shop", new SaveShopDto());
+        return "/shop/registration";
     }
 
     @PostMapping("/registration")
-    public String registration(@ModelAttribute("shop") Shop shop, Model model, BindingResult result) {
+    public String registration(@Valid @ModelAttribute("shop") SaveShopDto saveShop, BindingResult result, Model model) {
         try {
             if (result.hasErrors()) {
-                return "registration";
+                return "shop/registration";
             }
-
-            if (shopService.existByEmail(shop.getEmail())) {
-                model.addAttribute("message", "Email already exist");
-                return "registration";
+            if (shopService.existByEmail(saveShop.getEmail())) {
+                model.addAttribute("message", "Email is already exist");
+                return "shop/registration";
             } else {
+                Shop shop = getShopFromSaveDto(saveShop);
                 shopService.save(shop);
                 return "redirect:/shop/authorization";
             }
-
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Error: " + e.getMessage());
         }
-
-        return "registration";
+        return "shop/registration";
     }
 
     @GetMapping("/authorization")
     public String authorization(Model model) {
-        model.addAttribute("shop", new Shop() {
-        });
-        return "authorization";
+        model.addAttribute("shop", new AuthorizationShopDto());
+        return "shop/authorization";
     }
 
     @PostMapping("/authorization")
-    public String authorization(@ModelAttribute("shop") Shop shop, Model model, HttpSession httpSession) {
-        Shop byEmail = shopService.getShopByEmail(shop.getEmail());
+    public String authorization(@Valid @ModelAttribute("shop") AuthorizationShopDto authShop, BindingResult result, Model model, HttpSession httpSession) {
         try {
-            if (byEmail != null) {
-                if (byEmail.getPassword().equals(shop.getPassword())) {
-                    httpSession.setAttribute("shop", byEmail);
+            if (result.hasErrors()) {
+                return "shop/authorization";
+            }
+            if(shopService.existByEmail(authShop.getEmail())) {
+                Shop shop = shopService.getShopByEmail(authShop.getEmail());
+                if (shop.getPassword().equals(authShop.getPassword())) {
+                    httpSession.setAttribute("shop", shop);
                     return "redirect:/";
                 } else {
-                    model.addAttribute("message","Password not equals");
+                    model.addAttribute("message", "Password not equals");
                 }
             } else {
-                model.addAttribute("message","email is empty");
+                model.addAttribute("message", "User not found");
             }
-
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Error: " + e.getMessage());
         }
-        return "authorization";
-
+        return "shop/authorization";
     }
 
     @GetMapping("/profile")
@@ -90,27 +91,27 @@ public class ShopController {
 
     @GetMapping("/profileUpdate")
     public String profileUpdate(Model model, HttpSession session) {
-        UpdateShopDto updateShopDto = (UpdateShopDto) session.getAttribute("shop");
-        model.addAttribute("updateShop", updateShopDto);
-        return "shop/update";
+        Shop shop = (Shop) session.getAttribute("shop");
+        model.addAttribute("updateShop", shop);
+        return "shop/profile";
     }
 
     @PostMapping("/profileUpdate")
-    public String profileUpdate(@Valid @ModelAttribute("shop") UpdateShopDto updateShopDto, BindingResult bindingResult,
+    public String profileUpdate(@Valid @ModelAttribute("updateShop") UpdateShopDto updateShopDto, BindingResult bindingResult,
                                 Model model, HttpSession session) {
         try {
             if (!bindingResult.hasErrors()) {
-                Shop shop = getShopFromDto(updateShopDto);
+                Shop shop = getShopFromUpdateDto(updateShopDto);
                 shopService.edit(shop);
                 Shop shopDb = shopService.getShopByEmail(shop.getEmail());
                 session.setAttribute("shop", shopDb);
                 model.addAttribute("messageComplete", true);
             }
-            return "shop/update";
+            return "shop/profile";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Error: " + e.getMessage());
         }
-        return "shop/update";
+        return "shop/profile";
     }
 
     @GetMapping("/storeBase")
@@ -128,7 +129,7 @@ public class ShopController {
     }
 
 
-    private Shop getShopFromDto(UpdateShopDto updateShopDto) {
+    private Shop getShopFromUpdateDto(UpdateShopDto updateShopDto) {
         Shop shop = new Shop();
         shop.setName(updateShopDto.getName());
         shop.setEmail(updateShopDto.getEmail());
@@ -136,6 +137,20 @@ public class ShopController {
         shop.setContactAddress(updateShopDto.getContactAddress());
         shop.setPassword(updateShopDto.getPassword());
         shop.setDescription(updateShopDto.getDescription());
+        return shop;
+    }
+
+    private Shop getShopFromSaveDto(SaveShopDto saveShopDto) {
+        Shop shop = new Shop();
+        shop.setName(saveShopDto.getName());
+        shop.setEmail(saveShopDto.getEmail());
+        shop.setPhoneNumber(saveShopDto.getPhoneNumber());
+        shop.setContactAddress(saveShopDto.getContactAddress());
+        shop.setPassword(saveShopDto.getPassword());
+        shop.setDescription(saveShopDto.getDescription());
+        shop.setAmountOfMarks(saveShopDto.getAmountOfMarks());
+        shop.setNumberOfMarks(saveShopDto.getNumberOfMarks());
+        shop.setProducts(new ArrayList<>());
         return shop;
     }
 }
