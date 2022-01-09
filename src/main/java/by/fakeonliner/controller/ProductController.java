@@ -42,7 +42,6 @@ public class ProductController {
 
     @PostMapping("/product")
     public String product() {
-
         return "product/product";
     }
 }

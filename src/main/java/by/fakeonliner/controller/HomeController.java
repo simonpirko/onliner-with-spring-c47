@@ -1,7 +1,8 @@
 package by.fakeonliner.controller;
 
 
-import by.fakeonliner.entity.product.*;
+import by.fakeonliner.entity.product.Category;
+import by.fakeonliner.entity.product.Product;
 import by.fakeonliner.entity.user.User;
 import by.fakeonliner.service.CategoryService;
 import by.fakeonliner.service.ProductService;
@@ -9,7 +10,6 @@ import by.fakeonliner.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
@@ -35,16 +35,7 @@ public class HomeController {
         List<Product> productList = productService.getAllProducts();
         httpSession.setAttribute("categoryList", categoryList);
         model.addAttribute("user", new User());
-//        model.addAttribute("categoryList", categoryList);
         model.addAttribute("productList", productList);
-        model.addAttribute("descFeature", new DescriptionFeature());
-        model.addAttribute("descFeatureVal", new DescriptionFeatureValue());
         return "home";
-    }
-
-    @PostMapping
-    public String index(Model model, User user, DescriptionFeature descriptionFeature, DescriptionFeatureValue descriptionFeatureValue) {
-
-        return "redirect:/";
     }
 }
