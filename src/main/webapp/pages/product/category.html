@@ -4,14 +4,11 @@
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
     <title>Category</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div th:replace="_header :: content"></div>
 <div class="container">
-    <div class="row">
+    <div class="row mt-3">
         <div class="col-sm-3 sidenav">
             <h4>Filters</h4>
         </div>
@@ -19,30 +16,35 @@
             <div class="row" th:each="product,iter:${productList}">
                 <div class="col-8 col-sm-2">
                     <div class="col-md-3 mt-1">
-                        <img class="rounded mx-auto d-block" style="max-width: 100px;max-height: 130px"
-                             th:src="${product.urlImage}">
+                        <a th:href="@{/product/product(id=${product.id})}"><img class="rounded mx-auto d-block"
+                                                                                style="max-width: 100px;max-height: 130px"
+                                                                                th:src="${product.urlImage}"></a>
                     </div>
                 </div>
                 <div class="col-8 col-sm-8">
-                    <a th:href="@{/product/product(id=${product.id})}"><h4 th:text="${product.model}"></h4></a>
+                    <a th:href="@{/product/product(id=${product.id})}"><h5 th:text="${product.model}"></h5></a>
                     <h5><span class="glyphicon glyphicon-time" th:text="${product.marketLaunchDate}"></span></h5>
-                    <h5><span class="label label-danger" th:text="${product.brand}"></span>
-                        <span class="label label-primary" th:text="${product.averageRating}"></span>
-                    </h5><br>
+                    <h7><span><button class="btn btn-primary btn-sm btn btn-danger" type="button" disabled
+                                      th:text="${product.brand}"></button></span>
+                        <span><button class="btn btn-primary btn-sm btn btn-primary" type="button" disabled
+                                      th:text="${product.averageRating}"></button></span>
+                    </h7>
+                    <br><br>
                     <p th:text="${product.description}"></p>
                     <br><br>
+
                 </div>
                 <div class="col-4 col-sm-2 align-items-center align-content-center border-left mt-1">
                     <div class="d-flex flex-row align-items-center">
                         <h4 class="mr-1" th:text="${product.price}"></h4>
                     </div>
-                    <div class="d-flex flex-column mt-4">
+                    <div class="d-flex flex-column mt-3">
                         <button class="label label-primary" type="button">35 предложений</button>
                     </div>
                 </div>
                 <hr>
             </div>
-            <hr>
+
         </div>
     </div>
 </div>
