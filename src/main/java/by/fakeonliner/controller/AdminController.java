@@ -98,6 +98,21 @@ public class AdminController {
         if (product != null) {
             productService.save(product);
         }
+        model.addAttribute("savedProduct",product);
+        return "/admin/add_product";
+    }
+
+    @GetMapping("/add_product_description")
+    public String addProductDescription(Model model) {
+        model.addAttribute("newDescValList", new DescriptionFeatureValue());
+        return "/admin/add_product";
+    }
+
+    @PostMapping("/add_product_description")
+    public String addProductDescription(@ModelAttribute("newDescValList") List<DescriptionFeatureValue> descriptionFeatureValueList, BindingResult bindingResult, Product product, Model model) {
+        if (product != null) {
+            productService.save(product);
+        }
         return "redirect:/admin/add_product";
     }
 
@@ -111,15 +126,16 @@ public class AdminController {
     @PostMapping("/chose_category")
     public String choseCategory(Model model, long id) {
         List<DescriptionFeature> descriptionFeatureList = categoryService.getDescriptionFeature(id);
-        for (DescriptionFeature d :
-                descriptionFeatureList) {
+        for (DescriptionFeature d : descriptionFeatureList) {
             d.setDescriptionFeatureValues(descriptionFeatureValueDao.getByDescriptionFeatureId(d.getId()));
         }
+        Product product = new Product();
+        product.setCategoryId(id);
         model.addAttribute("descriptionFeatureList", descriptionFeatureList);
-        model.addAttribute("newProduct", new Product());
+        model.addAttribute("newProduct", product);
         model.addAttribute("id", id);
         model.addAttribute("newCategory", new Category());
-        return "/admin/add_product";
+        return "redirect:/admin/add_product";
     }
 
 

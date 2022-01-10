@@ -26,6 +26,7 @@
         <div th:if="${id!=null}">
             <form th:action="@{/admin/add_product}" th:object="${newProduct}" th:method="post">
                 <div class="row g-3 align-items-center">
+                    <input class="form-control" th:field="*{categoryId}" th:value="*{categoryId}" type="text">
                     <div class="col-auto">
                         <label th:for="inputModel" class="col-form-label">Модель</label>
                     </div>
@@ -66,19 +67,23 @@
                         </div>
                     </div>
                 </div>
-                <input type="text" th:field="*{categoryId}" hidden th:value="id">
                 <button type="submit" class="btn btn-primary">Добавить</button>
             </form>
-            <div class="row g-3 align-items-center mt-2" th:each="desc:${descriptionFeatureList}">
-                <div class="mb-3">
-                    <select name="id" class="form-select" aria-label="Default select example">
-                        <option selected></option>
-                        <th:block th:each="descVal:${desc.descriptionFeatureValues}">
-                            <option th:value="${descVal.name}" th:text="${descVal.name}"></option>
-                        </th:block>
-                    </select>
+        </div>
+        <div th:if="${savedProduct.id>0}">
+            <form th:action="@{/admin/add_product_description}" th:object="${newDescValList}" th:method="post">
+                <div class="row g-3 align-items-center mt-2" th:each="desc:${descriptionFeatureList}">
+                    <div class="mb-3">
+                        <select name="id" class="form-select" aria-label="Default select example">
+                            <option selected></option>
+                            <th:block th:each="descVal:${desc.descriptionFeatureValues}">
+                                <option th:value="${descVal.name}" th:text="${descVal.name}"></option>
+                            </th:block>
+                        </select>
+                    </div>
                 </div>
-            </div>
+                <button type="submit" class="btn btn-primary">Добавить</button>
+            </form>
         </div>
     </div>
     <div class="col">
