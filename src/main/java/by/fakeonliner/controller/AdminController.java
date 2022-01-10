@@ -98,21 +98,25 @@ public class AdminController {
         if (product != null) {
             productService.save(product);
         }
-        model.addAttribute("savedProduct",product);
+        List<DescriptionFeature> descriptionFeatureList = categoryService.getDescriptionFeature(product.getCategoryId());
+        for (DescriptionFeature d : descriptionFeatureList) {
+            d.setDescriptionFeatureValues(descriptionFeatureValueDao.getByDescriptionFeatureId(d.getId()));
+        }
+        model.addAttribute("descriptionFeatureList", descriptionFeatureList);
+        model.addAttribute("savedProduct", product);
         return "/admin/add_product";
     }
 
     @GetMapping("/add_product_description")
     public String addProductDescription(Model model) {
-        model.addAttribute("newDescValList", new DescriptionFeatureValue());
+
         return "/admin/add_product";
     }
 
     @PostMapping("/add_product_description")
-    public String addProductDescription(@ModelAttribute("newDescValList") List<DescriptionFeatureValue> descriptionFeatureValueList, BindingResult bindingResult, Product product, Model model) {
-        if (product != null) {
-            productService.save(product);
-        }
+    public String addProductDescription(@ModelAttribute("descriptionFeatureList") List<DescriptionFeature> descriptionFeatureValue, BindingResult bindingResult, Product product, Model model) {
+
+
         return "redirect:/admin/add_product";
     }
 
@@ -125,17 +129,17 @@ public class AdminController {
 
     @PostMapping("/chose_category")
     public String choseCategory(Model model, long id) {
-        List<DescriptionFeature> descriptionFeatureList = categoryService.getDescriptionFeature(id);
-        for (DescriptionFeature d : descriptionFeatureList) {
-            d.setDescriptionFeatureValues(descriptionFeatureValueDao.getByDescriptionFeatureId(d.getId()));
-        }
+//        List<DescriptionFeature> descriptionFeatureList = categoryService.getDescriptionFeature(id);
+//        for (DescriptionFeature d : descriptionFeatureList) {
+//            d.setDescriptionFeatureValues(descriptionFeatureValueDao.getByDescriptionFeatureId(d.getId()));
+//        }
         Product product = new Product();
         product.setCategoryId(id);
-        model.addAttribute("descriptionFeatureList", descriptionFeatureList);
+//        model.addAttribute("descriptionFeatureList", descriptionFeatureList);
         model.addAttribute("newProduct", product);
         model.addAttribute("id", id);
         model.addAttribute("newCategory", new Category());
-        return "redirect:/admin/add_product";
+        return "/admin/add_product";
     }
 
 

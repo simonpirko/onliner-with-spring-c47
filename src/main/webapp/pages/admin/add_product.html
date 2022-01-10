@@ -8,7 +8,7 @@
 <div th:replace="_header :: content"></div>
 <div class="container">
     <div class="row mt-3">
-        <div class="col" th:if="${id==null}">
+        <div class="col" th:if="${newProduct==null}">
             <form th:action="@{/admin/chose_category}" th:object="${newCategory}" th:method="post">
                 <select name="id" class="form-select" aria-label="Default select example">
                     <option selected>Выберите категорию</option>
@@ -17,12 +17,11 @@
                     </th:block>
                 </select>
                 <div class="mt-2">
-                    <a th:href="@{/admin/chose_category}">
                         <button type="submit" class="btn btn-primary">Submit</button>
-                    </a>
                 </div>
             </form>
         </div>
+
         <div th:if="${id!=null}">
             <form th:action="@{/admin/add_product}" th:object="${newProduct}" th:method="post">
                 <div class="row g-3 align-items-center">
@@ -67,17 +66,19 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Добавить</button>
+                    <button type="submit" class="btn btn-primary">Добавить</button>
             </form>
         </div>
-        <div th:if="${savedProduct.id>0}">
-            <form th:action="@{/admin/add_product_description}" th:object="${newDescValList}" th:method="post">
+
+        <div th:if="${savedProduct!=null}">
+            <form th:action="@{/admin/add_product_description}" th:object="${descriptionFeatureList}" th:method="post">
                 <div class="row g-3 align-items-center mt-2" th:each="desc:${descriptionFeatureList}">
+                    <p th:each="descVal:${desc.descriptionFeatureValues}"></p>
                     <div class="mb-3">
                         <select name="id" class="form-select" aria-label="Default select example">
-                            <option selected></option>
-                            <th:block th:each="descVal:${desc.descriptionFeatureValues}">
-                                <option th:value="${descVal.name}" th:text="${descVal.name}"></option>
+                            <option>selected</option>
+                            <th:block th:each="descVal:${descriptionFeatureList}">
+                                <option th:value="${descVal}" th:text="${descVal.name}"></option>
                             </th:block>
                         </select>
                     </div>
@@ -85,10 +86,10 @@
                 <button type="submit" class="btn btn-primary">Добавить</button>
             </form>
         </div>
+
+        <div class="col">
+        </div>
     </div>
-    <div class="col">
-    </div>
-</div>
 </div>
 </body>
 </html>
