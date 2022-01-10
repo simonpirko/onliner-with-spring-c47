@@ -24,7 +24,7 @@
             </form>
         </div>
         <div th:if="${id!=null}">
-            <form th:action="@{/admin/add_product}" th:object="${newProduct}" th:method="get">
+            <form th:action="@{/admin/add_product}" th:object="${newProduct}" th:method="post">
                 <div class="row g-3 align-items-center">
                     <div class="col-auto">
                         <label th:for="inputModel" class="col-form-label">Модель</label>
@@ -66,12 +66,13 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" name="categoryId" th:field="*{id}" class="btn btn-primary">Добавить</button>
+                <input type="text" th:field="*{categoryId}" hidden th:value="id">
+                <button type="submit" class="btn btn-primary">Добавить</button>
             </form>
-            <div class="row g-3 align-items-center" th:each="desc:${descriptionFeatureList}">
+            <div class="row g-3 align-items-center mt-2" th:each="desc:${descriptionFeatureList}">
                 <div class="mb-3">
                     <select name="id" class="form-select" aria-label="Default select example">
-                        <option selected>Выберите категорию</option>
+                        <option selected></option>
                         <th:block th:each="descVal:${desc.descriptionFeatureValues}">
                             <option th:value="${descVal.name}" th:text="${descVal.name}"></option>
                         </th:block>

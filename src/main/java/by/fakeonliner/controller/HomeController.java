@@ -7,17 +7,21 @@ import by.fakeonliner.entity.user.User;
 import by.fakeonliner.service.CategoryService;
 import by.fakeonliner.service.ProductService;
 import by.fakeonliner.service.UserService;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
 @RequestMapping("/")
 public class HomeController {
+
 
     private final UserService userService;
     private final ProductService productService;
@@ -38,4 +42,5 @@ public class HomeController {
         model.addAttribute("productList", productList);
         return "home";
     }
+
 }

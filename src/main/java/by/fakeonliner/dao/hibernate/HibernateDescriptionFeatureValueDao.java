@@ -1,6 +1,5 @@
 package by.fakeonliner.dao.hibernate;
 
-import by.fakeonliner.entity.product.DescriptionFeature;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,7 @@ import javax.persistence.NoResultException;
 import java.util.List;
 
 @Repository
-public class DescriptionFeatureValueDao implements by.fakeonliner.dao.DescriptionFeatureValueDao {
+public class HibernateDescriptionFeatureValueDao implements by.fakeonliner.dao.DescriptionFeatureValueDao {
 
     @Autowired
     private SessionFactory sessionFactory;
