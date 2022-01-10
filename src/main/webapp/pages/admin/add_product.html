@@ -22,57 +22,67 @@
                     </a>
                 </div>
             </form>
-
-            <div th:if="${id!=null}">
-                <form th:action="@{/admin/add_product}" th:object="${newProduct}" th:method="post">
+        </div>
+        <div th:if="${id!=null}">
+            <form th:action="@{/admin/add_product}" th:object="${newProduct}" th:method="get">
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                        <label th:for="inputModel" class="col-form-label">Модель</label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="text" id="inputModel" th:field="*{model}" class="form-control">
+                    </div>
                     <div class="row g-3 align-items-center">
                         <div class="col-auto">
-                            <label th:for="inputModel" class="col-form-label">Модель</label>
+                            <label for="brand" class="col-form-label">Брэнд</label>
                         </div>
                         <div class="col-auto">
-                            <input type="text" id="inputModel" th:field="*{model}" class="form-control">
-                        </div>
-                        <div class="row g-3 align-items-center">
-                            <div class="col-auto">
-                                <label for="brand" class="col-form-label">Брэнд</label>
-                            </div>
-                            <div class="col-auto">
-                                <input type="text" id="brand" th:field="*{brand}" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row g-3 align-items-center">
-                            <div class="col-auto">
-                                <label for="description" class="col-form-label">Описание</label>
-                            </div>
-                            <div class="col-auto">
-                                <input type="text" id="description" th:field="*{description}" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row g-3 align-items-center">
-                            <div class="col-auto">
-                                <label for="marketLaunchDate" class="col-form-label">Год выпуска</label>
-                            </div>
-                            <div class="col-auto">
-                                <input type="text" id="marketLaunchDate" th:field="*{marketLaunchDate}"
-                                       class="form-control">
-                            </div>
-                        </div>
-                        <div class="row g-3 align-items-center">
-                            <div class="col-auto">
-                                <label for="urlImage" class="col-form-label">Ссылка на фото</label>
-                            </div>
-                            <div class="col-auto">
-                                <input type="text" id="urlImage" th:field="*{urlImage}" class="form-control">
-                            </div>
+                            <input type="text" id="brand" th:field="*{brand}" class="form-control">
                         </div>
                     </div>
-                    <button th:value="${id}" type="button" class="btn btn-primary">Добавить</button>
-                </form>
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label for="description" class="col-form-label">Описание</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" id="description" th:field="*{description}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label for="marketLaunchDate" class="col-form-label">Год выпуска</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" id="marketLaunchDate" th:field="*{marketLaunchDate}"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label for="urlImage" class="col-form-label">Ссылка на фото</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" id="urlImage" th:field="*{urlImage}" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" name="categoryId" th:field="*{id}" class="btn btn-primary">Добавить</button>
+            </form>
+            <div class="row g-3 align-items-center" th:each="desc:${descriptionFeatureList}">
+                <div class="mb-3">
+                    <select name="id" class="form-select" aria-label="Default select example">
+                        <option selected>Выберите категорию</option>
+                        <th:block th:each="descVal:${desc.descriptionFeatureValues}">
+                            <option th:value="${descVal.name}" th:text="${descVal.name}"></option>
+                        </th:block>
+                    </select>
+                </div>
             </div>
         </div>
-        <div class="col">
-        </div>
     </div>
+    <div class="col">
+    </div>
+</div>
 </div>
 </body>
 </html>

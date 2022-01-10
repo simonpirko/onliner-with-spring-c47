@@ -1,6 +1,7 @@
 package by.fakeonliner.controller;
 
 
+import by.fakeonliner.dao.DescriptionFeatureValueDao;
 import by.fakeonliner.dao.hibernate.HibernateProductDao;
 import by.fakeonliner.dao.hibernate.HibernateUserDao;
 import by.fakeonliner.entity.product.Category;
@@ -31,6 +32,9 @@ public class AdminController {
 
     @Autowired
     private HibernateProductDao hibernateProductDao;
+
+    @Autowired
+    private DescriptionFeatureValueDao descriptionFeatureValueDao;
 
     private final ProductService productService;
 
@@ -94,7 +98,7 @@ public class AdminController {
         if (product != null) {
             productService.save(product);
         }
-        return "/admin/add_product";
+        return "redirect:/admin/add_product";
     }
 
     @GetMapping("/chose_category")
@@ -107,6 +111,10 @@ public class AdminController {
     @PostMapping("/chose_category")
     public String choseCategory(Model model, long id) {
         List<DescriptionFeature> descriptionFeatureList = categoryService.getDescriptionFeature(id);
+        for (DescriptionFeature d :
+                descriptionFeatureList) {
+            d.setDescriptionFeatureValues(descriptionFeatureValueDao.getByDescriptionFeatureId(d.getId()));
+        }
         model.addAttribute("descriptionFeatureList", descriptionFeatureList);
         model.addAttribute("newProduct", new Product());
         model.addAttribute("id", id);
