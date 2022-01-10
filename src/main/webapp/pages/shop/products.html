@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div th:replace="_header :: content"></div>
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-sm-12">
+            <div class="row" th:each="product : ${products}">
+                <div class="col-8 col-sm-2">
+                    <div class="col-md-3 mt-1">
+                        <a th:href="@{/product/product(id=${product.id})}"><img class="rounded mx-auto d-block"
+                                                                                style="max-width: 100px;max-height: 130px"
+                                                                                th:src="${product.urlImage}"></a>
+                    </div>
+                </div>
+                <div class="col-8 col-sm-8">
+                    <a th:href="@{/product/product(id=${product.id})}"><h5 th:text="${product.model}"></h5></a>
+                    <h5><span class="glyphicon glyphicon-time" th:text="${product.marketLaunchDate}"></span></h5>
+                    <h7><span><button class="btn btn-primary btn-sm btn btn-danger" type="button" disabled
+                                      th:text="${product.brand}"></button></span>
+                        <span><button class="btn btn-primary btn-sm btn btn-primary" type="button" disabled
+                                      th:text="${product.averageRating}"></button></span>
+                    </h7>
+                    <br><br>
+                    <p th:text="${product.description}"></p>
+                    <br><br>
+
+                </div>
+                <div class="col-4 col-sm-2 align-items-center align-content-center border-left mt-1">
+                    <form action="#" th:action="@{/shop/changePrice(id=${product.id})}" th:method="post">
+                        <div class="d-flex flex-row align-items-center">
+                            <input class="mr-1" th:value="${product.price}" name="price">
+                        </div>
+                        <div class="d-flex flex-column mt-3">
+                            <button class="btn btn-success" type="submit">Изменить цену</button>
+                        </div>
+                        <div th:if="${errorId == product.id}" class="form-text">
+                            <p style="color: red" th:utext="${errorMessage}"></p>
+                        </div>
+                    </form>
+                    <form action="#" th:action="@{/shop/deleteProduct(id=${product.id})}" th:method="post">
+                        <div class="d-flex flex-column mt-3">
+                            <button class="btn btn-danger" type="submit">Удалить товар</button>
+                        </div>
+                    </form>
+                </div>
+                <hr>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

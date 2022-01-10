@@ -1,5 +1,6 @@
 package by.fakeonliner.dao;
 
+import by.fakeonliner.entity.product.Product;
 import by.fakeonliner.entity.shop.Shop;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +16,4 @@ public interface ShopDao {
     void edit(Shop shop);
     void delete(Shop shop);
     Shop findById(long id);
-}
+ }

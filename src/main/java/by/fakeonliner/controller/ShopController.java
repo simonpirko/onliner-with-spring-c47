@@ -3,8 +3,11 @@ package by.fakeonliner.controller;
 import by.fakeonliner.dto.shop.AuthorizationShopDto;
 import by.fakeonliner.dto.shop.SaveShopDto;
 import by.fakeonliner.dto.shop.UpdateShopDto;
+import by.fakeonliner.entity.product.Product;
 import by.fakeonliner.entity.shop.Shop;
+import by.fakeonliner.service.ProductService;
 import by.fakeonliner.service.ShopService;
+import net.bytebuddy.matcher.StringMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +15,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/shop")
@@ -21,10 +27,12 @@ public class ShopController {
 
 
     private final ShopService shopService;
+    private final ProductService productService;
 
     @Autowired
-    public ShopController(ShopService shopService) {
+    public ShopController(ShopService shopService, ProductService productService) {
         this.shopService = shopService;
+        this.productService = productService;
     }
 
     @GetMapping("/registration")
@@ -65,7 +73,7 @@ public class ShopController {
             if (result.hasErrors()) {
                 return "shop/authorization";
             }
-            if(shopService.existByEmail(authShop.getEmail())) {
+            if (shopService.existByEmail(authShop.getEmail())) {
                 Shop shop = shopService.getShopByEmail(authShop.getEmail());
                 if (shop.getPassword().equals(authShop.getPassword())) {
                     httpSession.setAttribute("shop", shop);
@@ -89,14 +97,14 @@ public class ShopController {
         return "shop/profile";
     }
 
-    @GetMapping("/profileUpdate")
+    @GetMapping("/profileShop")
     public String profileUpdate(Model model, HttpSession session) {
         Shop shop = (Shop) session.getAttribute("shop");
         model.addAttribute("updateShop", shop);
         return "shop/profile";
     }
 
-    @PostMapping("/profileUpdate")
+    @PostMapping("/profileShop")
     public String profileUpdate(@Valid @ModelAttribute("updateShop") UpdateShopDto updateShopDto, BindingResult bindingResult,
                                 Model model, HttpSession session) {
         try {
@@ -121,6 +129,40 @@ public class ShopController {
         return "storeBase";
     }
 
+    @GetMapping("/products")
+    public String shopProducts(HttpSession session, Model model) {
+        Shop shop = (Shop) session.getAttribute("shop");
+        model.addAttribute("products", shop.getProducts());
+        return "/shop/products";
+    }
+
+    @PostMapping("/deleteProduct")
+    public String deleteProduct(long id, Model model, HttpSession session) {
+//        Shop shop = (Shop) session.getAttribute("shop");
+//        Shop shopDb = shopService.getShopByEmail(shop.getEmail());
+//        Shop convertedShop = deleteProduct(shopDb, id);
+//        shopService.edit(convertedShop);
+        Shop shop = (Shop) session.getAttribute("shop");
+        shop = shopService.deleteProductFromShop(shop, id);
+        session.setAttribute("shop", shop);
+        return "redirect: /shop/products";
+    }
+
+    @PostMapping ("/changePrice")
+    public String changePrice(@NotBlank(message = "Field is empty") String price, long id, HttpSession session, Model model) {
+        try {
+            float priceProduct = Float.parseFloat(price);
+            Shop shop = (Shop) session.getAttribute("shop");
+            Shop convertedShop = changeProductPrice(shop, id, priceProduct);
+            shopService.edit(convertedShop);
+            session.setAttribute("shop", convertedShop);
+            return "redirect: /shop/products";
+        } catch (Exception e) {
+            model.addAttribute("errorId", id);
+            model.addAttribute("errorMessage", "Error: " + e.getMessage());
+        }
+        return "redirect: /shop/products";
+    }
 
     @GetMapping("/logout")
     public String logout(HttpSession httpSession) {
@@ -153,4 +195,27 @@ public class ShopController {
         shop.setProducts(new ArrayList<>());
         return shop;
     }
+
+    private Shop deleteProduct(Shop shop, long id) {
+        List<Product> products = new ArrayList<>();
+        for (Product product : shop.getProducts()) {
+            if (product.getId() != id) {
+                products.add(product);
+            }
+        }
+        shop.setProducts(products);
+        return shop;
+    }
+
+    private Shop changeProductPrice(Shop shop, long id, float price) {
+        for (int i = 0; i < shop.getProducts().size(); i++) {
+            if (shop.getProducts().get(i).getId() == id) {
+                shop.getProducts().get(i).setPrice(price);
+                break;
+            }
+        }
+        return shop;
+    }
+
+
 }

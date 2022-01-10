@@ -1,11 +1,13 @@
 package by.fakeonliner.service;
 
 import by.fakeonliner.dao.ShopDao;
+import by.fakeonliner.entity.product.Product;
 import by.fakeonliner.entity.shop.Shop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -37,5 +39,21 @@ public class ShopService {
 
     public List<Shop> getShopList() {
         return shopDao.getShopList();
+    }
+
+    public Shop deleteProductFromShop(Shop shop, long id) {
+        Shop shopDb = shopDao.getShopByEmail(shop.getEmail());
+        shopDb = deleteProduct(shopDb,id);
+        shopDao.edit(shopDb);
+        return shopDb;
+    }
+
+    private Shop deleteProduct(Shop shop, long id) {
+        for (Product product : shop.getProducts()) {
+            if (product.getId() == id) {
+                shop.getProducts().remove(product);
+            }
+        }
+        return shop;
     }
 }

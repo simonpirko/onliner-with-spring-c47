@@ -5,13 +5,33 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">Fake Onliner</a>
+            <a class="navbar-brand" th:if="${session.shop == null}" href="/">Fake Onliner</a>
+            <a class="navbar-brand" th:if="${session.shop != null}" th:href="@{/shop/profileShop}">Fake Onliner</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
                     aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+
+            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown1" th:if="${session.shop != null}">
+                <ul class="navbar-nav mb-2 mb-lg-0 d-flex">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/shop/profileShop"><span
+                                class="bi bi-person-circle"></span> Профиль</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/shop/products"><span
+                            class="bi bi-person-circle"></span> Продукты</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/user/authorization"><span
+                            class="bi bi-person-circle"></span> Комментарии</a>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown" th:if="${session.shop == null}">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
@@ -33,6 +53,10 @@
                 </form>
 
                 <ul class="navbar-nav mb-2 mb-lg-0 d-flex">
+                    <li class="nav-item" th:if="${session.shop==null}">
+                        <a class="nav-link active" aria-current="page" href="/shop/authorization"><span
+                                class="bi bi-person-circle"></span> Shop</a>
+                    </li>
                     <li class="nav-item" th:if="${session.authUser==null}">
                         <a class="nav-link active" aria-current="page" href="/user/authorization"><span
                                 class="bi bi-person-circle"></span> Вход</a>

@@ -2,7 +2,9 @@ package by.fakeonliner.dao.hibernate;
 
 
 import by.fakeonliner.dao.ShopDao;
+import by.fakeonliner.entity.product.Product;
 import by.fakeonliner.entity.shop.Shop;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +44,11 @@ public class HibernateShopDao implements ShopDao {
     @Override
     public Shop getShopByEmail(String email) {
         try (Session session = sessionFactory.openSession()) {
-            return (Shop) session.createQuery("from Shop where email= :email")
+            Shop shop = (Shop) session.createQuery("from Shop where email= :email")
                     .setParameter("email", email)
                     .getSingleResult();
+            Hibernate.initialize(shop.getProducts());
+            return shop;
         } catch (NoResultException e) {
             return null;
         }
