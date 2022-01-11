@@ -99,8 +99,8 @@ public class AdminController {
         return "/admin/addproduct";
     }
 
-    @GetMapping("/deleteProduct")
-    public String deletedProduct(User user, Model model){
+    @GetMapping("/showAllProduct")
+    public String showAllProduct(Model model, User user){
         User byUser = hibernateUserDao.findById(user.getId());
         model.addAttribute("admin", byUser);
 
@@ -108,22 +108,46 @@ public class AdminController {
         List<Product> productList = productService.getAllProducts();
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("productList", productList);
-        return "/admin/deleteProduct";
+        return "/admin/showAllProduct";
     }
 
-    @PostMapping("/deleteProduct")
-    public String deletedProduct(@Valid @ModelAttribute("shop") Product product, BindingResult bindingResult, Model model){
+    @GetMapping("/showProduct/{id}")
+    public String showProduct(@PathVariable(value = "id") long id, Model model, User user){
+        User byUser = hibernateUserDao.findById(user.getId());
+        model.addAttribute("admin", byUser);
+//        Product productList = hibernateProductDao.findById(id);
+//        Optional<Product> productList = Optional.ofNullable(hibernateProductDao.findById(id));
+        Product productList = productService.getById(id);
+        model.addAttribute("productList", productList);
+        return "/admin/showProduct";
+    }
+
+//    @GetMapping("/deleteProduct")
+//    public String deletedProduct(User user, Model model){
+//        User byUser = hibernateUserDao.findById(user.getId());
+//        model.addAttribute("admin", byUser);
+//
+//        List<Category> categoryList = categoryService.getCategory();
+//        List<Product> productList = productService.getAllProducts();
+//        model.addAttribute("categoryList", categoryList);
+//        model.addAttribute("productList", productList);
+//        return "/admin/deleteProduct";
+//    }
+
+    @PostMapping("/showProduct/{id}/delete")
+    public String deletedProduct(@PathVariable(value = "id") long id, BindingResult bindingResult, Model model){
         try {
             if (bindingResult.hasErrors()) {
-                return "/admin/deleteProduct";
+                return "/admin/delete";
             }
-            hibernateProductDao.delete(product.getId());
-            return "redirect:/admin/profileAdmin";
+            Product product1 = hibernateProductDao.findById(id);
+            hibernateProductDao.delete(product1);
+            return "/admin/showAllProduct";
 
         }catch (Exception e) {
             model.addAttribute("errorMessage", "Error: " + e.getMessage());
         }
-        return "/admin/deleteProduct";
+        return "/admin/showProduct";
     }
 
     @GetMapping("/editProduct")
