@@ -95,28 +95,34 @@ public class AdminController {
 
     @PostMapping("/add_product")
     public String addProduct(@ModelAttribute("newProduct") Product product, BindingResult bindingResult, Model model) {
-        if (product != null) {
-            productService.save(product);
-        }
+//        if (product != null) {
+//            productService.save(product);
+//        }
         List<DescriptionFeature> descriptionFeatureList = categoryService.getDescriptionFeature(product.getCategoryId());
         for (DescriptionFeature d : descriptionFeatureList) {
             d.setDescriptionFeatureValues(descriptionFeatureValueDao.getByDescriptionFeatureId(d.getId()));
         }
+
+        List<DescriptionFeatureValue> descriptionFeatureValueList = new ArrayList<>();
         model.addAttribute("descriptionFeatureList", descriptionFeatureList);
+        model.addAttribute("descriptionFeatureValueList", descriptionFeatureValueList);
         model.addAttribute("savedProduct", product);
         return "/admin/add_product";
     }
 
     @GetMapping("/add_product_description")
     public String addProductDescription(Model model) {
-
         return "/admin/add_product";
     }
 
     @PostMapping("/add_product_description")
-    public String addProductDescription(@ModelAttribute("descriptionFeatureList") List<DescriptionFeature> descriptionFeatureValue, BindingResult bindingResult, Product product, Model model) {
-
-
+    public String addProductDescription(@ModelAttribute("descriptionFeatureValueList") List<DescriptionFeatureValue> descriptionFeatureValueList
+            , BindingResult bindingResult
+            , Product product
+            , Model model) {
+        Product product1 = (Product) model.getAttribute("savedProduct");
+        product1.setDescriptionFeatureValues(descriptionFeatureValueList);
+        productService.save(product1);
         return "redirect:/admin/add_product";
     }
 
