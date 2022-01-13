@@ -22,7 +22,6 @@
             </form>
         </div>
 
-
         <div th:if="${id!=null}">
             <form th:action="@{/admin/add_product}" th:object="${newProduct}" th:method="post">
                 <div class="row g-3 align-items-center">
@@ -73,19 +72,18 @@
 
 
         <div th:if="${savedProduct!=null}">
-            <form th:action="@{/admin/add_product_description}" th:object="${descriptionFeatureValueList}"
-                  th:method="post">
+            <th:form th:action="@{/admin/add_product_description}" th:object="${descriptionFeatureValueList}"
+                     th:method="post">
                 <p th:text="${savedProduct.model}"></p>
-                <div class="row g-3 align-items-center mt-2" th:each="descfeature:${descriptionFeatureList}">
-                    <div class="mb-3">
-                        <span th:text="${descfeature.descriptionFeatureValues}">
-                        <span th:each="val:${descfeature.descriptionFeatureValues}">
-<!--                                <span th:text="${}">-->
-                            </span>
+                <div th:each="descfeature:${descriptionFeatureList}">
+                    <div th:text="${descfeature.name}">
+                        <div th:each="val:${descfeature.descriptionFeatureValues}">
+                            <input th:type="text" th:value="" th:field="${val.name}">
+                        </div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Добавить</button>
-            </form>
+            </th:form>
         </div>
 
         <div class="col">

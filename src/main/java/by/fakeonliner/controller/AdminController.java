@@ -121,6 +121,7 @@ public class AdminController {
             , Product product
             , Model model) {
         Product product1 = (Product) model.getAttribute("savedProduct");
+        assert product1 != null;
         product1.setDescriptionFeatureValues(descriptionFeatureValueList);
         productService.save(product1);
         return "redirect:/admin/add_product";
