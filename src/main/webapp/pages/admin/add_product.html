@@ -73,14 +73,18 @@
 
 
         <div th:if="${savedProduct!=null}">
-            <form th:action="@{/admin/add_product_description}" th:object="${descriptionFeatureValueList}" th:method="post">
-                    <p th:text="${savedProduct.model}"></p>
+            <form th:action="@{/admin/add_product_description}" th:object="${descriptionFeatureValueList}"
+                  th:method="post">
+                <p th:text="${savedProduct.model}"></p>
+                <p th:text="${descriptionFeatureList}"></p>
                 <div class="row g-3 align-items-center mt-2" th:each="descfeature:${descriptionFeatureList}">
+
                     <div class="mb-3">
-                        <span th:each="val:${descfeature.descriptionFeatureValues}">
-                            <input th:field="${val.name}" th:value="name" type="text">
-                            <span th:text="${val.name}"></span>
-                        </span>
+                        <span th:text="${descfeature.name}"></span>
+                        <select th:name="${descfeature.id}" th:each="val:${descfeature.descriptionFeatureValues}">
+                            <option th:value="${val.id}" th:text="${val.name}"></option>
+                        </select>
+                        <input th:name="${descfeature.id}" value="" type="text">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Добавить</button>
