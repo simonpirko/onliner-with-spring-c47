@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -116,8 +118,13 @@ public class AdminController {
         User byUser = hibernateUserDao.findById(user.getId());
         model.addAttribute("admin", byUser);
 //        Product productList = hibernateProductDao.findById(id);
-//        Optional<Product> productList = Optional.ofNullable(hibernateProductDao.findById(id));
-        Product productList = productService.getById(id);
+        Optional<Product> product1 = Optional.ofNullable(hibernateProductDao.findById(id));
+        ArrayList<Product> productList = new ArrayList<>();
+        product1.ifPresent(productList::add);
+//        Product productList = productService.getById(id);
+//        List<Product> productList = productService.getAllProducts();
+        List<Category> categoryList = categoryService.getCategory();
+        model.addAttribute("categoryList", categoryList);
         model.addAttribute("productList", productList);
         return "/admin/showProduct";
     }
@@ -135,7 +142,7 @@ public class AdminController {
 //    }
 
     @PostMapping("/showProduct/{id}/delete")
-    public String deletedProduct(@PathVariable(value = "id") long id, BindingResult bindingResult, Model model){
+    public String deletedProduct(@PathVariable("id") long id, BindingResult bindingResult, Model model){
         try {
             if (bindingResult.hasErrors()) {
                 return "/admin/delete";
