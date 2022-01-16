@@ -24,68 +24,79 @@
 
 
         <div th:if="${id!=null}">
-<!--            <div th:if="${existByModel}!=null" class="alert alert-warning" role="alert">-->
-<!--                Product exist!-->
-<!--            </div>-->
+            <div class="row">
+                <h5>Добавление товара</h5>
+            </div>
             <form th:action="@{/admin/add_product}" th:object="${newProduct}" th:method="post">
                 <div class="row g-3 align-items-center">
-                    <input class="form-control" th:field="*{categoryId}" th:value="*{categoryId}" type="text">
-                    <div class="col-auto">
-                        <label th:for="inputModel" class="col-form-label">Модель</label>
-                    </div>
-                    <div class="col-auto">
-                        <input type="text" id="inputModel" th:field="*{model}" class="form-control">
-                    </div>
-                    <div class="row g-3 align-items-center">
-                        <div class="col-auto">
-                            <label for="brand" class="col-form-label">Брэнд</label>
-                        </div>
-                        <div class="col-auto">
-                            <input type="text" id="brand" th:field="*{brand}" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row g-3 align-items-center">
-                        <div class="col-auto">
-                            <label for="description" class="col-form-label">Описание</label>
-                        </div>
-                        <div class="col-auto">
-                            <input type="text" id="description" th:field="*{description}" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row g-3 align-items-center">
-                        <div class="col-auto">
-                            <label for="marketLaunchDate" class="col-form-label">Год выпуска</label>
-                        </div>
-                        <div class="col-auto">
-                            <input type="text" id="marketLaunchDate" th:field="*{marketLaunchDate}"
-                                   class="form-control">
-                        </div>
-                    </div>
-                    <div class="row g-3 align-items-center">
-                        <div class="col-auto">
-                            <label for="urlImage" class="col-form-label">Ссылка на фото</label>
-                        </div>
-                        <div class="col-auto">
-                            <input type="text" id="urlImage" th:field="*{urlImage}" class="form-control">
-                        </div>
-                    </div>
+                    <input hidden class="form-control" th:field="*{categoryId}" th:value="*{categoryId}" type="text">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Наименование характеристики</th>
+                            <th scope="col">Значение</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><label for="inputModel" class="col-form-label">Модель</label></td>
+                            <td><input type="text" id="inputModel" th:field="*{model}" class="form-control"></td>
+                        </tr>
+                        <!--                        <div id="emailHelp" class="form-text">-->
+                        <!--                            <p th:if="${#fields.hasErrors('email')}" style="color: red" th:errors="*{email}"></p>-->
+                        <!--                            <p th:if="${messageUser == true}" style="color:red">Email is empty</p>-->
+                        <!--                        </div>-->
+                        <tr>
+                            <td><label for="brand" class="col-form-label">Брэнд</label></td>
+                            <td><input type="text" id="brand" th:field="*{brand}" class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="description" class="col-form-label">Описание</label></td>
+                            <td><input type="text" id="description" th:field="*{description}" class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="marketLaunchDate" class="col-form-label">Год выпуска</label></td>
+                            <td><input type="number" id="marketLaunchDate" th:field="*{marketLaunchDate}"
+                                       class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="urlImage" class="col-form-label">Ссылка на фото</label></td>
+                            <td><input type="url" id="urlImage" th:field="*{urlImage}" class="form-control"></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <button type="submit" class="btn btn-primary">Добавить</button>
             </form>
         </div>
 
 
-        <div th:if="${savedProduct!=null}">
+        <div class="row g-3 align-items-center" th:if="${savedProduct!=null}">
             <form th:action="@{/admin/add_product_description}" th:method="post">
-                <p th:text="${savedProduct.model}"></p>
-                <div class="row g-3 align-items-center mt-2" th:each="descfeature:${descriptionFeatureList}">
-                    <div class="mb-3">
-                        <span th:text="${descfeature.name}"></span>
-                        <select th:name="idArray" >
-                            <option  th:each="val:${descfeature.descriptionFeatureValues}" th:value="${val.id}" th:text="${val.name}"></option>
-                        </select>
-                    </div>
+                <div class="row">
+                    <h5 th:text="${savedProduct.model}"></h5>
                 </div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Наименование характеристики</th>
+                        <th scope="col">Значение</th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="descfeature:${descriptionFeatureList}">
+                    <tr>
+                        <td>
+                            <label for="inputModel" class="col-form-label" th:text="${descfeature.name}">Модель</label>
+                        </td>
+                        <td>
+                            <select th:name="idArray">
+                                <option th:each="val:${descfeature.descriptionFeatureValues}" th:value="${val.id}"
+                                        th:text="${val.name}"></option>
+                            </select>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
                 <input th:name="productId" th:value="${savedProduct.id}" hidden type="text">
                 <button type="submit" class="btn btn-primary">Добавить</button>
             </form>

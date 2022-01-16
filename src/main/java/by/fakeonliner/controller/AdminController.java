@@ -100,7 +100,7 @@ public class AdminController {
         if (product != null) {
             if (productService.existByModel(product.getModel())) {
                 model.addAttribute("existByModel");
-                return "/admin/add_product";
+                return "redirect:/admin/add_product";
             } else {
                 productService.save(product);
             }
