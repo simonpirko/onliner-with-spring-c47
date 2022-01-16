@@ -40,7 +40,4 @@ public class User {
     @Enumerated(EnumType.STRING)
     private RoleUser roleUser;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Basket basket;
-
 }

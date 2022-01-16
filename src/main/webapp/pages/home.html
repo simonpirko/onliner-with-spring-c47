@@ -47,9 +47,7 @@
                                 <div class="d-flex flex-column">
                                     <span class="text-muted rebate" th:utext="${product.price}"></span>
                                 </div>
-                                <form action="#"
-                                      th:action="@{/basket/saveInBasket(id=${product.id})}"
-                                      method="get">
+                                <form action="#" th:action="@{/basket/save(id=${product.id})}" th:method="post">
                                     <input type="submit" class="btn btn-primary"
                                            value="Buy now"/>
                                 </form>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Payment</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/pages/styles/order.scss}"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+          integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+          crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="_header :: content"></div>
+
+<div class="container d-lg-flex">
+    <div class="container py-5">
+        <div class="row mb-4">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-6">Ordering</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 mx-auto">
+                <div class="card ">
+                    <div class="card-header">
+                        <div class="tab-content">
+                            <div id="credit-card" class="tab-pane fade show active pt-3">
+                                <form action="#" th:action="@{/basket/order}" th:object="${order}"
+                                      th:method="post">
+                                    <div class="form-group">
+                                        <label>
+                                            <h6>First Name</h6>
+                                        </label>
+                                        <input class="form-control" maxlength="254" th:field="*{firstName}"
+                                               th:value="*{firstName}" placeholder="First name" type="text" required>
+                                        <div class="form-text">
+                                            <p th:if="${#fields.hasErrors('firstName')}" style="color: red"
+                                               th:errors="*{firstName}"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            <h6>Last Name</h6>
+                                        </label>
+                                        <input class="form-control" maxlength="254" th:field="*{lastName}"
+                                               th:value="*{lastName}" placeholder="Last name" type="text" required>
+                                        <div class="form-text">
+                                            <p th:if="${#fields.hasErrors('lastName')}" style="color: red"
+                                               th:errors="*{lastName}"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            <h6>Email</h6>
+                                        </label>
+                                        <input class="form-control" maxlength="254" th:field="*{email}"
+                                               th:value="*{email}" placeholder="Email" type="email" required>
+                                        <div class="form-text">
+                                            <p th:if="${#fields.hasErrors('email')}" style="color: red"
+                                               th:errors="*{email}"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            <h6>Country</h6>
+                                        </label>
+                                        <input class="form-control" maxlength="254" th:field="*{country}"
+                                               th:value="*{country}" placeholder="Country" type="text" required>
+                                        <div class="form-text">
+                                            <p th:if="${#fields.hasErrors('country')}" style="color: red"
+                                               th:errors="*{country}"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            <h6>Address</h6>
+                                        </label>
+                                        <input class="form-control" maxlength="254" th:field="*{address}"
+                                               th:value="*{address}" placeholder="Address" type="text" required>
+                                        <div class="form-text">
+                                            <p th:if="${#fields.hasErrors('address')}" style="color: red"
+                                               th:errors="*{address}"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            <h6>Phone Number</h6>
+                                        </label>
+                                        <input class="form-control" maxlength="254" th:field="*{phoneNumber}"
+                                               th:value="*{phoneNumber}" placeholder="PhoneNumber" type="text" required>
+                                        <div class="form-text">
+                                            <p th:if="${#fields.hasErrors('phoneNumber')}" style="color: red"
+                                               th:errors="*{phoneNumber}"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            <h6>Card Owner</h6>
+                                        </label>
+                                        <input type="text" th:field="*{cardOwnerName}" th:value="*{cardOwnerName}"
+                                               maxlength="254" placeholder="Card Owner Name" required
+                                               class="form-control ">
+                                        <div class="form-text">
+                                            <p th:if="${#fields.hasErrors('cardOwnerName')}" style="color: red"
+                                               th:errors="*{cardOwnerName}"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            <h6>Card number</h6>
+                                        </label>
+                                        <div class="input-group">
+                                            <input maxlength="16" min="1111111111111111" th:field="*{cardNumber}" th:value="*{cardNumber}"
+                                                   type="text" placeholder="Valid card number"
+                                                   class="form-control " required>
+                                            <div class="input-group-append">
+                                                    <span
+                                                            class="input-group-text text-muted"> <i
+                                                            class="fab fa-cc-visa mx-1"></i> <i
+                                                            class="fab fa-cc-mastercard mx-1"></i> <i
+                                                            class="fab fa-cc-amex mx-1"></i>
+                                                    </span>
+                                            </div>
+                                            <div class="form-text">
+                                                <p th:if="${#fields.hasErrors('cardNumber')}" style="color: red"
+                                                   th:errors="*{cardNumber}"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <div class="form-group"><label><span class="hidden-xs">
+                                                    <h6>Expiration Date</h6>
+                                                </span></label>
+                                                <div class="input-group">
+                                                    <input th:field="*{month}" th:value="*{month}" type="number" min="1"
+                                                           max="12"
+                                                           maxlength="2" placeholder="MM"
+                                                           class="form-control" required>
+                                                    <div class="form-text">
+                                                        <p th:if="${#fields.hasErrors('month')}" style="color: red"
+                                                           th:errors="*{month}"></p>
+                                                    </div>
+                                                    <input th:field="*{year}" th:value="*{year}" type="number" min="1"
+                                                           max="12" maxlength="2"
+                                                           placeholder="YY"
+                                                           class="form-control"
+                                                           required>
+                                                    <div class="form-text">
+                                                        <p th:if="${#fields.hasErrors('year')}" style="color: red"
+                                                           th:errors="*{year}"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group mb-4"><label data-toggle="tooltip"
+                                                                                title="Three digit CV code on the back of your card">
+                                                <h6>CVV <i class="fa fa-question-circle d-inline"></i></h6>
+                                            </label>
+                                                <input min="111" th:field="*{cvv}" th:value="*{cvv}" type="text" maxlength="3"
+                                                       required class="form-control">
+                                                <div class="form-text">
+                                                    <p th:if="${#fields.hasErrors('cvv')}" style="color: red"
+                                                       th:errors="*{cvv}"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" style="width: 560px" class="subscribe btn btn-primary btn-block shadow-sm">
+                                            Confirm Payment
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
