@@ -5,6 +5,7 @@ import by.fakeonliner.dto.product.DescriptionFeatureValueDto;
 import by.fakeonliner.entity.product.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -55,6 +56,7 @@ public class ProductService {
     public List<Product> getAllProducts() {
         return productDao.getAllProducts();
     }
+
 
     public void saveDescriptionValues(long[] arrays, long productId) {
         if (arrays != null) {

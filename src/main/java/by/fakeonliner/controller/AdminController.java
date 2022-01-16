@@ -140,13 +140,8 @@ public class AdminController {
 
     @PostMapping("/chose_category")
     public String choseCategory(Model model, long id) {
-//        List<DescriptionFeature> descriptionFeatureList = categoryService.getDescriptionFeature(id);
-//        for (DescriptionFeature d : descriptionFeatureList) {
-//            d.setDescriptionFeatureValues(descriptionFeatureValueDao.getByDescriptionFeatureId(d.getId()));
-//        }
         Product product = new Product();
         product.setCategoryId(id);
-//        model.addAttribute("descriptionFeatureList", descriptionFeatureList);
         model.addAttribute("newProduct", product);
         model.addAttribute("id", id);
         model.addAttribute("newCategory", new Category());

@@ -16,7 +16,12 @@ import javax.persistence.*;
 public class DescriptionFeatureValueDto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(name = "product_id")
     private long product_id;
+
+    @Column(name = "descriptionfeaturevalues_id")
     private long descriptionfeaturevalues_id;
 }

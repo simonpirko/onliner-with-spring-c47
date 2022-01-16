@@ -7,5 +7,5 @@ import java.util.List;
 @Repository
 public interface DescriptionFeatureValueDao {
 
-    public List getByDescriptionFeatureId(long descriptionFeatureId);
+    List getByDescriptionFeatureId(long descriptionFeatureId);
 }
