@@ -1,6 +1,7 @@
 package by.fakeonliner.dao.hibernate;
 
 import by.fakeonliner.dao.ProductDao;
+import by.fakeonliner.dto.product.DescriptionFeatureValueDto;
 import by.fakeonliner.entity.product.Product;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -105,6 +106,15 @@ public class HibernateProductDao implements ProductDao {
     public List getAllProducts() {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from Product").list();
+        }
+    }
+
+    @Override
+    public void saveDescriptionFeatureValues(DescriptionFeatureValueDto descriptionFeatureValueDto) {
+        try (Session session = sessionFactory.openSession()) {
+            session.save(descriptionFeatureValueDto);
+        } catch (NoResultException e) {
+            e.printStackTrace();
         }
     }
 }

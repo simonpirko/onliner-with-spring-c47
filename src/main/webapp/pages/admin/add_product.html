@@ -24,6 +24,9 @@
 
 
         <div th:if="${id!=null}">
+<!--            <div th:if="${existByModel}!=null" class="alert alert-warning" role="alert">-->
+<!--                Product exist!-->
+<!--            </div>-->
             <form th:action="@{/admin/add_product}" th:object="${newProduct}" th:method="post">
                 <div class="row g-3 align-items-center">
                     <input class="form-control" th:field="*{categoryId}" th:value="*{categoryId}" type="text">
@@ -73,20 +76,17 @@
 
 
         <div th:if="${savedProduct!=null}">
-            <form th:action="@{/admin/add_product_description}" th:object="${descriptionFeatureValueList}"
-                  th:method="post">
+            <form th:action="@{/admin/add_product_description}" th:method="post">
                 <p th:text="${savedProduct.model}"></p>
-                <p th:text="${descriptionFeatureList}"></p>
                 <div class="row g-3 align-items-center mt-2" th:each="descfeature:${descriptionFeatureList}">
-
                     <div class="mb-3">
                         <span th:text="${descfeature.name}"></span>
-                        <select th:name="${descfeature.id}" th:each="val:${descfeature.descriptionFeatureValues}">
-                            <option th:value="${val.id}" th:text="${val.name}"></option>
+                        <select th:name="idArray" >
+                            <option  th:each="val:${descfeature.descriptionFeatureValues}" th:value="${val.id}" th:text="${val.name}"></option>
                         </select>
-                        <input th:name="${descfeature.id}" value="" type="text">
                     </div>
                 </div>
+                <input th:name="productId" th:value="${savedProduct.id}" hidden type="text">
                 <button type="submit" class="btn btn-primary">Добавить</button>
             </form>
         </div>

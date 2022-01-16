@@ -18,9 +18,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -95,14 +97,18 @@ public class AdminController {
 
     @PostMapping("/add_product")
     public String addProduct(@ModelAttribute("newProduct") Product product, BindingResult bindingResult, Model model) {
-//        if (product != null) {
-//            productService.save(product);
-//        }
+        if (product != null) {
+            if (productService.existByModel(product.getModel())) {
+                model.addAttribute("existByModel");
+                return "/admin/add_product";
+            } else {
+                productService.save(product);
+            }
+        }
         List<DescriptionFeature> descriptionFeatureList = categoryService.getDescriptionFeature(product.getCategoryId());
         for (DescriptionFeature d : descriptionFeatureList) {
             d.setDescriptionFeatureValues(descriptionFeatureValueDao.getByDescriptionFeatureId(d.getId()));
         }
-
         List<DescriptionFeatureValue> descriptionFeatureValueList = new ArrayList<>();
         model.addAttribute("descriptionFeatureList", descriptionFeatureList);
         model.addAttribute("descriptionFeatureValueList", descriptionFeatureValueList);
@@ -116,14 +122,12 @@ public class AdminController {
     }
 
     @PostMapping("/add_product_description")
-    public String addProductDescription(@ModelAttribute("descriptionFeatureValueList") List<DescriptionFeatureValue> descriptionFeatureValueList
-            , BindingResult bindingResult
-            , Product product
-            , Model model) {
-        Product product1 = (Product) model.getAttribute("savedProduct");
-        assert product1 != null;
-        product1.setDescriptionFeatureValues(descriptionFeatureValueList);
-        productService.save(product1);
+    public String addProductDescription(HttpServletRequest reg, Model model) {
+        String[] ids = reg.getParameterValues("idArray");
+        long[] arrays = Arrays.asList(ids).stream().mapToLong(Long::parseLong).toArray();
+        String productId = reg.getParameter("productId");
+        long productIdL = Long.parseLong(productId);
+        productService.saveDescriptionValues(arrays, productIdL);
         return "redirect:/admin/add_product";
     }
 
