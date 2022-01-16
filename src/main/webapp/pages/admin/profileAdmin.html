@@ -9,25 +9,38 @@
 <div class="container">
     <div class="row justify-content-center mt-4">
         <div class="col-sm-4">
-            <div class="row justify-content-center m-3">
-                <div class="col-sm-8">
-                    <a href="/admin/add_product"><button type="submit" class="btn btn-primary" >Add product</button></a>
-                </div>
-            </div>
             <form th:action="@{/admin/profileAdmin}" th:object="${adminProf}">
-                <div class="row justify-content-center m-3">
-                    <div class="col-sm-8">
-                        <button type="submit" class="btn btn-primary">Deleted product<a href="/admin/deleteProduct"></a></button>
+                <div class="bd-example">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary">Product</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/admin/add_product">Add product</a></li>
+                            <li><a class="dropdown-item" href="#">Add description feature</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Separated link</a></li>
+                        </ul>
                     </div>
-                </div>
-                <div class="row justify-content-center m-3">
-                    <div class="col-sm-8">
-                        <button type="submit" class="btn btn-primary" >Edit product<a href="/admin/editProduct"></a></button>
+                    <div class="btn-group">
+                        <a href="/admin/deleteProduct">
+                            <button type="button" class="btn btn-danger">Delete product</button>
+                        </a>
+                    </div>
+                    <div class="btn-group">
+                        <a href="/admin/editProduct">
+                            <button type="button" class="btn btn-primary">Edit product</button>
+                        </a>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

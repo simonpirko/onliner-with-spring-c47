@@ -11,13 +11,13 @@
         <div class="col" th:if="${newProduct==null}">
             <form th:action="@{/admin/chose_category}" th:object="${newCategory}" th:method="post">
                 <select name="id" class="form-select" aria-label="Default select example">
-                    <option selected>Выберите категорию</option>
+                    <option disabled>Выберите категорию</option>
                     <th:block th:each="category:${categoryList}">
                         <option th:value="${category.id}" th:text="${category.name}"></option>
                     </th:block>
                 </select>
                 <div class="mt-2">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Выбрать</button>
                 </div>
             </form>
         </div>
