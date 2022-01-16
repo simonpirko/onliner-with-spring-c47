@@ -1,14 +1,17 @@
 package by.fakeonliner.dao.hibernate;
 
 import by.fakeonliner.dao.ProductDao;
+import by.fakeonliner.dto.product.DescriptionFeatureValueDto;
 import by.fakeonliner.entity.product.Product;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import java.util.List;
 
 @Repository
@@ -105,6 +108,14 @@ public class HibernateProductDao implements ProductDao {
     public List getAllProducts() {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from Product").list();
+        }
+    }
+
+    @Override
+    public void saveDescriptionFeatureValues(DescriptionFeatureValueDto descriptionFeatureValueDto) {
+        try (Session session = sessionFactory.openSession()) {
+            session.save(descriptionFeatureValueDto);
+        } catch (NoResultException e) {
         }
     }
 }

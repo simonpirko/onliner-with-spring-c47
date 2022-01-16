@@ -1,5 +1,6 @@
 package by.fakeonliner.dao;
 
+import by.fakeonliner.dto.product.DescriptionFeatureValueDto;
 import by.fakeonliner.entity.product.*;
 import org.springframework.stereotype.Repository;
 
@@ -9,6 +10,8 @@ import java.util.List;
 public interface ProductDao {
 
     void save(Product product);
+
+    void saveDescriptionFeatureValues(DescriptionFeatureValueDto descriptionFeatureValueDto);
 
     boolean existByModel(String model);
 

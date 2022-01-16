@@ -22,10 +22,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-//    @NotBlank(message = "Empty field")
+    @NotBlank(message = "Empty field")
     private String email;
 
-//    @NotBlank(message = "Empty field")
+    @NotBlank(message = "Empty field")
     private String password;
 
 //    @NotBlank(message = "Empty field")

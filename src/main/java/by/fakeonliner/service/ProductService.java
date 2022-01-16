@@ -1,10 +1,13 @@
 package by.fakeonliner.service;
 
 import by.fakeonliner.dao.ProductDao;
+import by.fakeonliner.dto.product.DescriptionFeatureValueDto;
 import by.fakeonliner.entity.product.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -52,6 +55,19 @@ public class ProductService {
 
     public List<Product> getAllProducts() {
         return productDao.getAllProducts();
+    }
+
+
+    public void saveDescriptionValues(long[] arrays, long productId) {
+        if (arrays != null) {
+            for (long arr : arrays) {
+                DescriptionFeatureValueDto descriptionValues = new DescriptionFeatureValueDto();
+                descriptionValues.setProduct_id(productId);
+                descriptionValues.setDescriptionfeaturevalues_id(arr);
+                productDao.saveDescriptionFeatureValues(descriptionValues);
+            }
+        }
+
     }
 
 }

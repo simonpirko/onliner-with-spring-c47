@@ -28,7 +28,8 @@ public class WebConfiguration {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
         viewResolver.setContentType("text/html;charset=UTF-8");
-        viewResolver.setCharacterEncoding("utf-8");
+        viewResolver.setForceContentType(true);
+        viewResolver.setCharacterEncoding("UTF-8");
         return viewResolver;
     }
 

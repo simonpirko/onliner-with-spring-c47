@@ -44,7 +44,8 @@
                                     class="bi bi-person-circle"></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink2">
-                            <li><a class="dropdown-item" href="/user/profile"> Профиль</a></li>
+                            <li><a th:if="${session.authUser.roleUser.toString()=='USER'}" class="dropdown-item" href="/user/profile"> Профиль</a></li>
+                            <li><a th:if="${session.authUser.roleUser.toString()=='ADMIN'}" class="dropdown-item" href="/admin/profileAdmin"> Профиль</a></li>
                             <li><a class="dropdown-item" href="/user/logout"> Выход</a></li>
                         </ul>
                     </div>

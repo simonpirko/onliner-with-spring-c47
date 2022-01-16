@@ -58,7 +58,7 @@ public class HibernateCategoryDao implements CategoryDao {
     public List<DescriptionFeature> getDescriptionFeature(long categoryId) {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("select c from DescriptionFeature c where c.categoryId =:categoryId"
-                            , DescriptionFeature.class)
+                            , DescriptionFeature.class).setParameter("categoryId", categoryId)
                     .getResultList();
         } catch (NoResultException e) {
             return null;
