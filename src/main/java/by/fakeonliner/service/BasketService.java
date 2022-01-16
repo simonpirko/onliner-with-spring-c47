@@ -1,7 +1,7 @@
 package by.fakeonliner.service;
 
 import by.fakeonliner.dao.inmemory.InMemoryBasketDao;
-import by.fakeonliner.dto.ProductBasketDto;
+import by.fakeonliner.dto.basket.ProductBasketDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,5 +38,9 @@ public class BasketService {
 
     public void deleteProduct(long id) {
         inMemoryBasketDao.deleteById(id);
+    }
+
+    public void deleteAllProducts() {
+        inMemoryBasketDao.deleteAllProducts();
     }
 }

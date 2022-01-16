@@ -1,7 +1,7 @@
 package by.fakeonliner.dao.inmemory;
 
 import by.fakeonliner.dao.BasketDao;
-import by.fakeonliner.dto.ProductBasketDto;
+import by.fakeonliner.dto.basket.ProductBasketDto;
 import org.springframework.stereotype.Repository;
 
 import java.util.LinkedList;
@@ -65,5 +65,10 @@ public class InMemoryBasketDao implements BasketDao {
     @Override
     public void updateProduct(ProductBasketDto productBasketDto) {
         IntStream.range(0, products.size()).filter(i -> products.get(i).getProduct().getModel().equals(productBasketDto.getProduct().getModel())).forEach(i -> products.set(i, productBasketDto));
+    }
+
+    @Override
+    public void deleteAllProducts() {
+        products = new LinkedList<>();
     }
 }

@@ -1,6 +1,6 @@
 package by.fakeonliner.dao;
 
-import by.fakeonliner.dto.ProductBasketDto;
+import by.fakeonliner.dto.basket.ProductBasketDto;
 
 import java.util.List;
 
@@ -12,4 +12,5 @@ public interface BasketDao {
     long getProductCount(ProductBasketDto productBasketDto);
     ProductBasketDto getProductById(long id);
     void deleteById(long id);
+    void deleteAllProducts();
 }

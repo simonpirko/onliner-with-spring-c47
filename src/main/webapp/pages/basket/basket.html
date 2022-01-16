@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Basket</title>
+    <link rel="stylesheet" href="/pages/styles/order.css">
 </head>
 <body>
 <div th:replace="_header :: content"></div>
@@ -50,10 +51,11 @@
                                           th:action="@{/basket/changeCount(id=${basket.product.id})}"
                                           th:method="post">
                                         <div class="d-flex align-items-center">
-                                            <input type="number" style="width:80px" th:name="count"
+                                            <input type="number"  min="1" style="width:80px" th:name="count"
                                                    class="form-control form-control-lg text-left"
                                                    th:value="${basket.count}">
-                                            <button style="margin-left: 80px" class="btn btn-white border-secondary bg-white btn-md mb-2">
+                                            <button style="margin-left: 80px"
+                                                    class="btn btn-white border-secondary bg-white btn-md mb-2">
                                                 <i class="bi bi-arrow-clockwise"></i>
                                             </button>
                                         </div>
@@ -79,7 +81,7 @@
         </div>
         <div class="row mt-4 d-flex align-items-center">
             <div class="col-sm-6 order-md-2 text-right">
-                <a href="catalog.html" style="margin-left: 380px; width: 190px"
+                <a th:href="@{/basket/order}" style="margin-left: 380px; width: 190px"
                    class="btn btn-primary mb-4 btn-lg pl-2 pr-2">Checkout</a>
             </div>
             <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
@@ -89,5 +91,6 @@
         </div>
     </div>
 </section>
+</div>
 </body>
 </html>

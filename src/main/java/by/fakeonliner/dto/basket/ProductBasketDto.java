@@ -1,4 +1,4 @@
-package by.fakeonliner.dto;
+package by.fakeonliner.dto.basket;
 
 import by.fakeonliner.entity.product.Product;
 import lombok.AllArgsConstructor;
