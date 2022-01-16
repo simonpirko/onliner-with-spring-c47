@@ -27,8 +27,8 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <form class="d-flex" th:action="@{/product/search}" th:method="get">
+                    <input th:name="searchProduct" value="" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Поиск</button>
                 </form>
 
