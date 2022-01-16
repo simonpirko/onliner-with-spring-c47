@@ -13,4 +13,5 @@ public interface BasketDao {
     ProductBasketDto getProductById(long id);
     void deleteById(long id);
     void deleteAllProducts();
+    long getBasketSize();
 }
