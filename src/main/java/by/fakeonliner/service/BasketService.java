@@ -43,4 +43,8 @@ public class BasketService {
     public void deleteAllProducts() {
         inMemoryBasketDao.deleteAllProducts();
     }
+
+    public long getBasketSize() {
+        return inMemoryBasketDao.getBasketSize();
+    }
 }

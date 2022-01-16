@@ -32,11 +32,12 @@ public class BasketController {
     }
 
     @PostMapping("/save")
-    public String save(Model model, long id) {
+    public String save(Model model, long id, HttpSession session) {
         Product product = productService.getById(id);
         ProductBasketDto productBasket = new ProductBasketDto(product);
         basketService.save(productBasket);
-        model.addAttribute("productId", id);
+        long size = basketService.getBasketSize();
+        session.setAttribute("basketSize", size);
         return "redirect: /";
     }
 
@@ -56,19 +57,23 @@ public class BasketController {
         if(user != null) {
             setOrderDtoFields(orderDto, user);
         }
+        long size = basketService.getBasketSize();
+        session.setAttribute("basketSize", size);
         model.addAttribute("order", orderDto);
         return "/basket/order";
     }
 
     @PostMapping("/order")
     public String orderProducts(@Valid @ModelAttribute("order") OrderDto orderDto,
-                                BindingResult result, Model model) {
+                                BindingResult result, Model model, HttpSession session) {
         try {
             if (result.hasErrors()) {
                 return "basket/order";
             }
             List<ProductBasketDto> products = basketService.getProducts();
             basketService.deleteAllProducts();
+            long size = basketService.getBasketSize();
+            session.setAttribute("basketSize", size);
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Error: " + e.getMessage());
         }
@@ -76,15 +81,19 @@ public class BasketController {
     }
 
     @PostMapping("/changeCount")
-    public String changeProductCount(long id, long count, Model model) {
+    public String changeProductCount(long id, long count, Model model, HttpSession session) {
         ProductBasketDto product = basketService.getProductById(id);
         basketService.changeProductCount(product, count);
+        long size = basketService.getBasketSize();
+        session.setAttribute("basketSize", size);
         return "redirect: /basket";
     }
 
     @PostMapping("/delete")
-    public String deleteProduct(long id) {
+    public String deleteProduct(long id, HttpSession session) {
         basketService.deleteProduct(id);
+        long size = basketService.getBasketSize();
+        session.setAttribute("basketSize", size);
         return "redirect: /basket";
     }
 

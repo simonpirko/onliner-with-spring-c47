@@ -2,6 +2,7 @@ package by.fakeonliner.dao.inmemory;
 
 import by.fakeonliner.dao.BasketDao;
 import by.fakeonliner.dto.basket.ProductBasketDto;
+import by.fakeonliner.entity.product.Product;
 import org.springframework.stereotype.Repository;
 
 import java.util.LinkedList;
@@ -70,5 +71,9 @@ public class InMemoryBasketDao implements BasketDao {
     @Override
     public void deleteAllProducts() {
         products = new LinkedList<>();
+    }
+
+    public long getBasketSize() {
+        return products.stream().mapToLong(ProductBasketDto::getCount).sum();
     }
 }
