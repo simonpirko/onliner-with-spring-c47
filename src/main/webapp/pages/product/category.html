@@ -24,11 +24,13 @@
                 <div class="col-8 col-sm-8">
                     <a th:href="@{/product/product(id=${product.id})}"><h5 th:text="${product.model}"></h5></a>
                     <h5><span class="glyphicon glyphicon-time" th:text="${product.marketLaunchDate}"></span></h5>
-                    <h7><span><button class="btn btn-primary btn-sm btn btn-danger" type="button" disabled
+                    <form th:action="@{/product/search}" th:method="get">
+                        <h7><span><button class="btn btn-primary btn-sm btn btn-danger" type="submit" th:name="searchProduct" th:value="${product.brand}"
                                       th:text="${product.brand}"></button></span>
                         <span><button class="btn btn-primary btn-sm btn btn-primary" type="button" disabled
-                                      th:text="${product.averageRating}"></button></span>
-                    </h7>
+                                          th:text="${product.averageRating}"></button></span>
+                        </h7>
+                    </form>
                     <br><br>
                     <p th:text="${product.description}"></p>
                     <br><br>

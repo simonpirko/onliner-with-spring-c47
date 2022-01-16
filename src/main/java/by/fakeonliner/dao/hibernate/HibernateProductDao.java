@@ -42,8 +42,8 @@ public class HibernateProductDao implements ProductDao {
     @Override
     public List<Product> findByModel(String model) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from Product where model LIKE :md", Product.class)
-                    .setParameter("md", "%"+model+"%")
+            return session.createQuery("from Product where lower (model) LIKE lower(:md)", Product.class)
+                    .setParameter("md", "%" + model + "%")
                     .getResultList();
         } catch (NoResultException e) {
             return null;
